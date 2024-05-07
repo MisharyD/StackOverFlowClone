@@ -11,14 +11,11 @@ html, body
 
 .header {
     display: grid;
-    grid-template-columns: repeat(10, 230px);
+    grid-template-columns: repeat(10, 10%);
     grid-template-areas: "logo logo . s s s s account login singUp ";
     background-color: #f7f6f6;
     border-top: 3px orange solid;
     /* height: 10%; */
-
-
-
 }
 
 .SrchBar {
