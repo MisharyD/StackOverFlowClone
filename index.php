@@ -6,9 +6,18 @@
     <title>Document</title>
 </head>
 <body>
-    <div class = "header" style = "display:flex">
-        <div></div>
-    </div>
+    <div class="header">
+<div class = "logo"> <a href="https://stackoverflow.com">
+<img src="logoSOV.png" alt="logo"></a>  <b>StackOverFlow</b></div>
+<div class = "SrchBar">
+  <form action="">
+    <input type="text" name="searchBar" id="searchBar" placeholder="Search....">
+  </form>
+</div>
+<div class = "acc" >Account</div>
+<div class = "login">Login</div>
+<div class = "signUp">SignUP</div>
+</div>
     <div class="body" style = "display:flex">
         <div class = "left"></div>
         <div class = "middle">
