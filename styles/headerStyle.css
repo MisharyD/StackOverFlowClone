@@ -1,21 +1,30 @@
+html, body 
+{
+    margin:0px;
+    padding:0px;
+    min-height: 100vh;
+}
 * {
     box-sizing: border-box;
 }
 
 .header {
-    display: grid;
-    grid-template-columns: repeat(10, 230px);
-    grid-template-areas: "logo logo . s s s s account login singUp ";
+    display: flex;
     background-color: #f7f6f6;
     border-top: 3px orange solid;
-    /* height: 10%; */
-
-
-
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
+.right-header-container
+{
+    display: flex;
+    gap:5em;
+    flex-wrap: wrap;
+}
 .SrchBar {
-    grid-area: s;
+    width: 600px;
+    flex: 1 1 auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,24 +42,25 @@
 }
 
 .acc {
-    grid-area: account;
+    flex:0 1 auto;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .login {
-    grid-area: login;
+    flex:0 1 auto;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .signUp {
-    grid-area: singUp;
+    flex:0 1 auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right:8px;
 }
 
 .acc,
