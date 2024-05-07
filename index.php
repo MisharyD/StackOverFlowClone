@@ -24,9 +24,9 @@
         <div class = "container">
             <div class = "left-body-container">
                 <ul class = "tab-container">
-                    <li class = "current-page tab"> <div><img src = "images/homeIcon.png" width = "20px" height = auto> Home </div> </li>
-                    <li class = "tab">Users</li>
-                    <li>Tags</li>
+                    <li class = "current-page tab"> <div><img src = "images/homeIcon.png" width = "20px" height = auto></div> <div>Home</div> </li>
+                    <li class = "tab"> <img src = "images/user.png" width = "20px" height = auto> <div> Users</div> </li>
+                    <li class = "tab"> <img src = "images/tag.png" width = "20px" height = auto> <div>Tags</div> </li>
                 </ul>
             </div>
 
