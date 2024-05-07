@@ -1,0 +1,58 @@
+.header {
+    display: grid;
+    grid-template-columns: repeat(10, 230px);
+    grid-template-areas: "logo logo . s s s s account login singUp ";
+    background-color: #f7f6f6;
+    border-top: 3px orange solid;
+    /* height: 10%; */
+
+
+
+}
+
+.SrchBar {
+    grid-area: s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#searchBar,
+.SrchBar form {
+    width: 100%;
+}
+
+.acc {
+    grid-area: account;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    grid-area: login;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signUp {
+    grid-area: singUp;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.acc,
+.login,
+.signUp,
+.SrchBar,
+.logo {
+    padding: 10px;
+}
