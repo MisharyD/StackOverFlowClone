@@ -1,3 +1,13 @@
+
+html, body 
+{
+    margin:0px;
+    padding:0px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -19,7 +29,8 @@ a:visited {
 
 .header {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(10, 10%);
+
     grid-template-areas: "logo logo . s s s s account login singUp ";
     background-color: #f7f6f6;
     border-top: 3px orange solid;
@@ -87,3 +98,93 @@ a:visited {
 .logo {
     padding: 10px;
 }
+
+.body
+{
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.container
+{
+    display: flex;
+
+}
+
+.left-body-container, .right-body-container, .middle-body-container
+{
+    padding:8px;
+}
+
+.left-body-container
+{
+    padding-right:0px;
+}
+
+.tab-container
+{
+    margin:0px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap:2em;
+
+}
+
+.tab
+{
+    display:flex;
+    padding:8px;
+    gap:1em
+}
+
+.tab:hover
+{
+    background-color: #E1E1E1;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.current-page
+{
+    background-color: #E1E1E1;
+    width:200px;
+    border-right: 3px solid #EF8236;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.middle-body-container
+{
+    width:900px;
+    border-left: 1px solid #CCCCCC;
+    display: flex;
+    flex-direction: column;
+}
+
+.ask-question
+{
+    width:15%;
+    align-self: flex-end;
+
+}
+.tab-container
+{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.top-questions-container
+{
+
+}
+
+.recent-questions-container
+{
+    
+}
+
+

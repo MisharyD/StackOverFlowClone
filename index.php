@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel = "stylesheet" href = "styles/headerStyle.css">
+    <link rel = "stylesheet" href = "styles/homeStyle.css">
 </head>
 <body>
+
    
 <div class="header">
 <div class = "logo"> <a href="https://stackoverflow.com">
@@ -27,16 +28,33 @@
     justify-content: center;
     align-items: center;text-decoration: none;"  >Sign-Up</a></div>
 </div>
-
     <div class="body">
-        <div class = "left-body-container">
+        <div class = "container">
+            <div class = "left-body-container">
+                <ul class = "tab-container">
+                    <li class = "current-page tab"> <div><img src = "images/homeIcon.png" width = "20px" height = auto></div> <div>Home</div> </li>
+                    <li class = "tab"> <img src = "images/user.png" width = "20px" height = auto> <div> Users</div> </li>
+                    <li class = "tab"> <img src = "images/tag.png" width = "20px" height = auto> <div>Tags</div> </li>
+                </ul>
+            </div>
 
-        </div>
-        <div class = "middle-body-container">
-                    
-        </div>
-        <div class = "right-body-container">
+            <div class = "middle-body-container">
+                <input class = "ask-question" type = "button" name = "ask-question" value = "Ask Question">
+                <div class = "top-questions-container">
+                    <div class = "card"></div>
+                </div>
+                <div class = "recent-questions-container">
 
+                </div> 
+            </div>
+
+            <div class = "right-body-container">
+                <div class = "dashboard-container">
+                    <div> Nb of questions asked:</div>
+                    <div> Nb of comments commented:</div>
+                    <div> Nb of Answers answered:</div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
