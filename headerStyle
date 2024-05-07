@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 .header {
     display: grid;
     grid-template-columns: repeat(10, 230px);
