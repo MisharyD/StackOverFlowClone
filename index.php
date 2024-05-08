@@ -1,3 +1,7 @@
+<?php
+    include("database.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,35 +62,26 @@
                 <h1>Recent Questions</h1> <!--header of the set-->
                 <!--the question tag-->
                 <div class="question-container" id = "recent-questions-container"> <!--container of the whole cards-->
-                    <div class="question" style = "display:none"> <!--container of one card-->
+                    <div class="question" id="card" style = "display:none"> <!--container of one card-->
                         <div class="left-container"> <!--div that consist of votes div, answers div, and question-content-tag-->
-                            <div class="votes">
-                                <p id="qVotes">0</p> <!--number of votes here-->
-                                <p> votes</p>
-                            </div>
                             <div class="answers">
                                 <p id="qAnswers">0</p> <!--number of answers here -->
                                 <p> answers </p>
                             </div>
                             <div class="question-content-tag">
                                 <div><a id="question" href="#">Question here </a></div>
-                                <p id = "qTag"> <span class="tag"> #alpha </span> <span class="tag"> JS</span> </p> <!--tags (each tag will have a span)-->
+                                <p id = "qTag"></p> <!--tags (each tag will have a span)-->
                             </div>
                         </div>
-                        <div class="time">
+                        <div class="time" id ="qTime">
                             asked 3 months ago by Abcd
                         </div>
                     </div>
                 </div>
-                
                 <h1> Top Questions</h1>
                 <div class="question-container" id = "top-questions-container"> <!--container of the whole cards-->
                     <div class="question"> <!--container of one card-->
                         <div class="left-container"> <!--div that consist of votes div, answers div, and question-content-tag-->
-                            <div class="votes">
-                                <p id="voteQ1">0</p> <!--number of votes here-->
-                                <p> votes</p>
-                            </div>
                             <div class="answers">
                                 <p id="answerQ1">0</p> <!--number of answers here -->
                                 <p> answers </p>
@@ -97,7 +92,7 @@
                             </div>
                         </div>
 
-                        <div class="time">
+                        <div class="time" id = "qTime">
                             asked 3 months ago by Abcd
                         </div>
                     </div>
@@ -112,7 +107,44 @@
             </div>
         </div>
     </div>
-    <script src= "scripts/cards.js"></script>
+    <script src= 'scripts/cards.js'></script>
 </body>
-
 </html>
+<?php
+        $result = mysqli_query($conn,"SELECT * FROM question ORDER BY created_at DESC LIMIT 10;");
+
+        $recentQuestions = array();
+        while($row = mysqli_fetch_assoc($result))
+        {
+            $recentQuestions[] = $row;
+        }
+
+        $result  = mysqli_query($conn, "SELECT COUNT(a.answer_id) AS num_answers FROM question q 
+        JOIN answer a ON q.question_id = a.question_id GROUP BY q.question_id, q.title
+        ORDER BY q.created_at DESC LIMIT 10;");
+
+        $nbOfVotesForRecent = array(); 
+        while($row = mysqli_fetch_assoc($result))
+        {
+            $nbOfVotesForRecent[] = $row;
+        }
+
+        //an array which also contain an array for tags for every question
+        $tags = array();
+        for($i = 0; $i< count($recentQuestions); $i++)
+        {
+            $tags[$i] = array();
+            $curr = $recentQuestions[$i]["question_id"];
+            $result = mysqli_query($conn,"SELECT tagName FROM tag WHERE question_id = $curr");
+            while($row = mysqli_fetch_assoc($result))
+                $tags[$i][] = $row;
+        }
+
+        $recentQuestions = json_encode($recentQuestions);
+        $nbOfVotesForRecent = json_encode($nbOfVotesForRecent);
+        $tags = json_encode($tags);
+        echo "<script>";
+        //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
+        echo "addQuestions(); addRecentQuestionsInfo($recentQuestions, $nbOfVotesForRecent, $tags);";
+        echo "</script>";
+?>
