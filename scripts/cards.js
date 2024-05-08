@@ -24,6 +24,9 @@ function changeQuestionAtt(questionNb,card)
     nbOfVotesContainer = actualCard.querySelector("#qVotes");
     nbOfVotesContainer.setAttribute("id", nbOfVotesContainer.getAttribute("id") + questionNb);
 
+    tagContainer = actualCard.querySelector("#qTag");
+    tagContainer.setAttribute("id", tagContainer.getAttribute("id") + questionNb);
+
     nbOfAnswersContainer = actualCard.querySelector("#qAnswers");
     nbOfAnswersContainer.setAttribute("id", nbOfAnswersContainer.getAttribute("id") + questionNb);
 

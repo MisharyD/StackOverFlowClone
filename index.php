@@ -70,7 +70,7 @@
                             </div>
                             <div class="question-content-tag">
                                 <div><a id="question" href="#">Question here </a></div>
-                                <p> <span class="tag"> #alpha </span> <span class="tag"> JS</span> </p> <!--tags (each tag will have a span)-->
+                                <p id = "qTag"> <span class="tag"> #alpha </span> <span class="tag"> JS</span> </p> <!--tags (each tag will have a span)-->
                             </div>
                         </div>
                         <div class="time">
