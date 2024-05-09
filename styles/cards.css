@@ -58,7 +58,8 @@
 .tag{
     font-size: 0.8em;
     align-self: flex-end;
-    background-color: #bfc6cd;
+    color: hsla(210,77%,36%,1); ;
+    background-color: hsla(210,80%,93%,1);
     margin-right: 5pt;
 }
 

@@ -35,15 +35,15 @@ function changeQuestionAtt(questionNb,card)
     return actualCard;
 }
 
-function addRecentQuestionsInfo(questions, NbOfVotes, tags)
+function addQuestionsInfo(questions, tags, containerId)
 {
     console.log(questions);
-    let questionsContainer = document.querySelector("#recent-questions-container")
+    let questionsContainer = document.querySelector("#" + containerId)
     for(let i=0; i<questions.length; i++)
         {
-            questionsContainer.querySelector("#qAnswers" + i).innerHTML = NbOfVotes[i].num_answers;
-            questionsContainer.querySelector("#question" + i).innerHTML = questions[i].title;
-            questionsContainer.querySelector("#qTime" + i).innerHTML = "Asked by " + questions[i].userName + " at " + questions[i].created_at; 
+            questionsContainer.querySelector("#qAnswers" + i).innerHTML = questions[i]["num_answers"];
+            questionsContainer.querySelector("#question" + i).innerHTML = questions[i]["title"];
+            questionsContainer.querySelector("#qTime" + i).innerHTML = "Asked by " + questions[i]["username"] + " at " + questions[i].created_at; 
 
             let tagContainer = questionsContainer.querySelector("#qTag" + i);
             for(let j = 0; j<tags[i].length ; j++)

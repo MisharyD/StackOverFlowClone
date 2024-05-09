@@ -79,24 +79,21 @@ body {
 {
     width:15%;
     align-self: flex-end;
-
+    background-color: orange;
+    padding: 5px;
+    color: white;
+    border: none;
+    border-radius: 3px;
 }
+.ask-question:hover
+{
+    cursor: pointer;
+}
+
 .tab-container
 {
     display: flex;
     flex-direction: column;
-}
-
-
-
-.top-questions-container
-{
-
-}
-
-.recent-questions-container
-{
-    
 }
 
 
