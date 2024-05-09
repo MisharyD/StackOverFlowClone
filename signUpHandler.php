@@ -1,14 +1,7 @@
 <?php
 session_start();
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "381-project";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
+include("database.php");
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
