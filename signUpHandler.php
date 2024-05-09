@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include("database.php");
 
 // Check connection
 if ($conn->connect_error) {
