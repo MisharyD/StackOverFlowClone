@@ -1,19 +1,7 @@
 <?php
 
 session_start();
-
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "381-project";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+include("database.php");
 
 // Initialize error message variable
 $error_message = "";
@@ -57,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
-  <link rel="stylesheet" href="CSS/login.css">
+  <link rel="stylesheet" href="styles/login.css">
 </head>
 
 
@@ -66,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <div class="header">
     <div class="logo"> <a href="https://stackoverflow.com">
-        <img src="logoSOV.png" alt="logo"></a> <b>StackOverFlow</b></div>
+        <img src="images/stack.png" alt="logo"></a> <b>StackOverFlow</b></div>
     <div class="SrchBar">
       <form action="mainSearchHandler.php" method="POST">
         <input style="padding-left:15px" type="text" name="searchBar" id="searchBar" placeholder="Search....">

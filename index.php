@@ -10,15 +10,16 @@ include ("database.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="CSS/home.css">
-    <link rel="stylesheet" href="CSS/header.css">
-    <link rel="stylesheet" href="CSS/cards.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/cards.css">
 </head>
 
 <body>
     <!-- Header part-->
-
+    
     <?php
+    
     if (isset($_SESSION["username"])) {
         include "LoggedIn-header.php";
     } else {
@@ -103,7 +104,7 @@ include ("database.php");
             </div>
         </div>
     </div>
-    <script src='JS/cards.js'></script>
+    <script src='scripts/cards.js'></script>
 </body>
 
 </html>
@@ -138,7 +139,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         $containerId = "recent-questions-container";
         echo "<script>";
         //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
-        echo "addQuestions(); addQuestionsInfo($recentQuestions, $tags, '$containerId');";
+        echo "addQuestions('$containerId'); addQuestionsInfo($recentQuestions, $tags, '$containerId');";
         echo "</script>";
 ?>
 
@@ -171,6 +172,6 @@ while ($row = mysqli_fetch_assoc($result)) {
      $containerId = "top-questions-container";
      echo "<script>";
      //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
-     echo "addQuestionsInfo($topQuestions, $tags, '$containerId');";    
+     echo "addQuestions('$containerId'); addQuestionsInfo($topQuestions, $tags, '$containerId');";    
      echo "</script>";
 ?>

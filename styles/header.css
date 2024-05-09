@@ -109,6 +109,10 @@ a:visited {
     align-items: center;
 }
 
+#signOut-hover:link {
+    color: black;
+}
+
 #signOut-hover:hover {
 
     background-color: rgb(255, 38, 0);

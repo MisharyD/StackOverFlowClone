@@ -1,19 +1,16 @@
-function addQuestions()
+function addQuestions(containerId)
 {
-    //returns the 2 container for top and recent questions
-    let recentQuestionContainer = document.querySelectorAll(".question-container");
+    let questionsContainer = document.querySelector("#" + containerId);
     let card = document.querySelector(".question")
 
     //add questions both containers
-    recentQuestionContainer.forEach((container) => 
-        {
-            for(let i = 0; i<10; i++)
-                {   
-                    let actualCard = changeQuestionAtt(i, card);
-                    container.appendChild(actualCard);
-                }
-        })
+    for(let i = 0; i<10; i++)
+        {   
+            let actualCard = changeQuestionAtt(i, card);
+            questionsContainer.appendChild(actualCard);
+        }
 }
+
 
 //change the tag,answers,time, and question ids
 function changeQuestionAtt(questionNb,card)
@@ -37,6 +34,7 @@ function changeQuestionAtt(questionNb,card)
 
 function addQuestionsInfo(questions, tags, containerId)
 {
+    
     console.log(questions);
     let questionsContainer = document.querySelector("#" + containerId)
     for(let i=0; i<questions.length; i++)

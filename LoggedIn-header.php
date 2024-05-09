@@ -1,6 +1,6 @@
 <div class="header2">
-    <div class="logo"> <a href="https://stackoverflow.com">
-            <img src="logoSOV.png" alt="logo"></a> <b>StackOverFlow</b></div>
+    <div class="logo"> <a href="signIn.php">
+            <img src="images/stack.png" alt="logo"></a> <b>StackOverFlow</b></div>
     <div class="SrchBar">
         <form action="mainSearchHandler.php" method="POST">
             <input style="padding-left:15px" type="text" name="searchBar" id="searchBar" placeholder="Search....">
