@@ -2,7 +2,7 @@
 
 include "loginHandler.php"
 
-  ?>
+?>
 
 
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ include "loginHandler.php"
 
 <body>
 
-  <?php include ("header.php"); ?>
+<?php include ("header.php"); ?>
 
   <div class="content">
 
