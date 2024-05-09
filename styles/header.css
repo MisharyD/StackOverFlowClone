@@ -24,7 +24,6 @@ a:visited {
     background-color: #f7f6f6;
     border-top: 3px orange solid;
     /* height: 10%; */
-
 }
 
 .SrchBar {
@@ -80,10 +79,40 @@ a:visited {
     align-items: center;
 }
 
+
+
 .acc,
 .login,
 .signUp,
 .SrchBar,
-.logo {
+.logo,
+.sign {
     padding: 10px;
+}
+
+
+/* ----------------------------------------------------------------------  Logged in Header styles ----------------------------------------------------------------------- */
+
+.header2 {
+
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-areas: "logo logo . s s s s account signOut signOut ";
+    background-color: #f7f6f6;
+    border-top: 3px orange solid;
+}
+
+.signOut {
+    grid-area: signOut;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#signOut-hover:hover {
+
+    background-color: rgb(255, 38, 0);
+    padding: 5px;
+    color: white;
+    border-radius: 3px;
 }
