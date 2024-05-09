@@ -1,8 +1,54 @@
 <?php
 
-include "loginHandler.php"
+session_start();
 
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "381-project";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+// Initialize error message variable
+$error_message = "";
+
+// Check if the form has been submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // Retrieve form data
+  $username = $_POST["username"];
+  $password = $_POST["password"];
+  $rememberMe = isset($_POST["rememberMe"]) ? 1 : 0;
+
+  // Check if the email and password match in the database
+  $sql = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
+  $result = $conn->query($sql);
+
+  if ($result->num_rows > 0) {
+    // Login successful
+    // Set remember me cookie if checked
+    if ($rememberMe) {
+      // Set a cookie to remember the user
+      setcookie("remember_user", $username, time() + (4 * 24 * 60 * 60), "/"); // Cookie expires in 4 days
+    }
+
+    // Redirect to homepage
+    $_SESSION["username"] = $username; // Store username in session variable
+    header("Location: index.php");
+    exit;
+  } else {
+    // Login failed
+    $error_message = "Invalid username or password";
+  }
+}
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -11,14 +57,33 @@ include "loginHandler.php"
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
-  <link rel="stylesheet" href="styles/login.css">
+  <link rel="stylesheet" href="CSS/login.css">
 </head>
 
 
 
 <body>
 
-<?php include ("header.php"); ?>
+  <div class="header">
+    <div class="logo"> <a href="https://stackoverflow.com">
+        <img src="logoSOV.png" alt="logo"></a> <b>StackOverFlow</b></div>
+    <div class="SrchBar">
+      <form action="mainSearchHandler.php" method="POST">
+        <input style="padding-left:15px" type="text" name="searchBar" id="searchBar" placeholder="Search....">
+      </form>
+    </div>
+    <div class="acc"><svg style="color: orange;" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+        fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+      </svg></div>
+    <div class="login"><a href="https://stackoverflow.com" id="login-hover" style=" display: flex;
+    justify-content: center;
+    align-items: center; text-decoration: none">Login</a></div>
+
+    <div class="signUp"><a href="https://stackoverflow.com" id="login-hover" style=" display: flex;
+    justify-content: center;
+    align-items: center;text-decoration: none;">Sign-Up</a></div>
+  </div>
 
   <div class="content">
 
@@ -27,7 +92,7 @@ include "loginHandler.php"
       <div id="errorMSG"></div>
 
       <div class="logo1"><a href="https://stackoverflow.com">
-          <img src="images/stack.png" alt="logo"></a></div>
+          <img src="logoSOV.png" alt="logo"></a></div>
 
 
       <div class="main">

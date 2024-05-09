@@ -1,5 +1,6 @@
 <?php
-    include("database.php");
+session_start();
+include ("database.php");
 ?>
 
 <!DOCTYPE html>
@@ -9,13 +10,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="styles/home.css">
-    <link rel="stylesheet" href="styles/cards.css">
+    <link rel="stylesheet" href="CSS/home.css">
+    <link rel="stylesheet" href="CSS/header.css">
+    <link rel="stylesheet" href="CSS/cards.css">
 </head>
 
 <body>
     <!-- Header part-->
-    <?php include ("header.php"); ?>
+
+    <?php
+    if (isset($_SESSION["username"])) {
+        include "LoggedIn-header.php";
+    } else {
+        include "notLoggedIn-header.php";
+    }
+
+    ?>
+
     <!-- Body part-->
     <div class="body">
         <div class="container">
@@ -44,19 +55,20 @@
 
                 <h1>Recent Questions</h1> <!--header of the set-->
                 <!--the question tag-->
-                <div class="question-container" id = "recent-questions-container"> <!--container of the whole cards-->
-                    <div class="question" id="card" style = "display:none"> <!--container of one card-->
-                        <div class="left-container"> <!--div that consist of votes div, answers div, and question-content-tag-->
+                <div class="question-container" id="recent-questions-container"> <!--container of the whole cards-->
+                    <div class="question" id="card" style="display:none"> <!--container of one card-->
+                        <div class="left-container">
+                            <!--div that consist of votes div, answers div, and question-content-tag-->
                             <div class="answers">
                                 <p id="qAnswers">0</p> <!--number of answers here -->
                                 <p> answers </p>
                             </div>
                             <div class="question-content-tag">
-                                <div><a id="question" href="stackoverflow.com">Question here </a></div>
-                                <p id = "qTag"></p> <!--tags (each tag will have a span)-->
+                                <div><a id="question" href="#">Question here </a></div>
+                                <p id="qTag"></p> <!--tags (each tag will have a span)-->
                             </div>
                         </div>
-                        <div class="time" id ="qTime">
+                        <div class="time" id="qTime">
                             asked 3 months ago by Abcd
                         </div>
                     </div>
@@ -71,11 +83,12 @@
                             </div>
                             <div class="question-content-tag">
                                 <div><a id="Q1" href="#">Question here </a></div>
-                                <p> <span class="tag"> #alpha </span> <span class="tag"> JS</span> </p> <!--tags (each tag will have a span)-->
+                                <p> <span class="tag"> #alpha </span> <span class="tag"> JS</span> </p>
+                                <!--tags (each tag will have a span)-->
                             </div>
                         </div>
 
-                        <div class="time" id = "qTime">
+                        <div class="time" id="qTime">
                             asked 3 months ago by Abcd
                         </div>
                     </div>
@@ -90,8 +103,9 @@
             </div>
         </div>
     </div>
-    <script src= 'scripts/cards.js'></script>
+    <script src='JS/cards.js'></script>
 </body>
+
 </html>
 
 <!-- retrive data about recent questions-->
@@ -103,11 +117,10 @@
         ORDER BY q.created_at DESC
         LIMIT 10;");
 
-        $recentQuestions = array();
-        while($row = mysqli_fetch_assoc($result))
-        {
-            $recentQuestions[] = $row;
-        }
+$recentQuestions = array();
+while ($row = mysqli_fetch_assoc($result)) {
+    $recentQuestions[] = $row;
+}
 
         //an array which also contain an array for tags for every question
         $tags = array();
