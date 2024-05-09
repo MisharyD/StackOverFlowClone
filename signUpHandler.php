@@ -1,7 +1,14 @@
 <?php
 session_start();
 
-include("database.php");
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "381-project";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -33,8 +40,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Set a cookie to remember the user
                 setcookie("remember_user", $username, time() + (4 * 24 * 60 * 60), "/"); // Cookie expires in 4 days
             }
-        
+
             // Redirect to homepage
+            $_SESSION["username"] = $username; // Store username in session variable
             header("Location: https://stackoverflow.com/");
             exit;
         } else {
