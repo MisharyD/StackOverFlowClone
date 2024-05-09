@@ -1,12 +1,7 @@
 <?php
 session_start();
-
 include("database.php");
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 // Initialize error message variable
 $error_message = "";
@@ -14,12 +9,12 @@ $error_message = "";
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
-    $email = $_POST["email"];
+    $username = $_POST["username"];
     $password = $_POST["password"];
     $rememberMe = isset($_POST["rememberMe"]) ? 1 : 0;
 
     // Check if the email and password match in the database
-    $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
+    $sql = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -27,10 +22,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Set remember me cookie if checked
         if ($rememberMe) {
             // Set a cookie to remember the user
-            setcookie("remember_user", $email, time() + (4 * 24 * 60 * 60), "/"); // Cookie expires in 4 days
+            setcookie("remember_user", $username, time() + (4 * 24 * 60 * 60), "/"); // Cookie expires in 4 days
         }
 
         // Redirect to homepage
+        $_SESSION["username"] = $username; // Store username in session variable
         header("Location: https://stackoverflow.com/");
         exit;
     } else {

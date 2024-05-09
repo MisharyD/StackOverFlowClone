@@ -2,7 +2,7 @@
 
 include "loginHandler.php"
 
-?>
+  ?>
 
 
 <!DOCTYPE html>
@@ -13,6 +13,8 @@ include "loginHandler.php"
   <title>Login</title>
   <link rel="stylesheet" href="styles/login.css">
 </head>
+
+
 
 <body>
 
@@ -25,7 +27,7 @@ include "loginHandler.php"
       <div id="errorMSG"></div>
 
       <div class="logo1"><a href="https://stackoverflow.com">
-          <img src="images/stack.png" alt="logo"></a></div>
+          <img src="logoSOV.png" alt="logo"></a></div>
 
 
       <div class="main">
@@ -33,14 +35,14 @@ include "loginHandler.php"
         <form id="log-form" method="POST">
 
 
-          <label for="email">
-            <h4>Email</h4>
+          <label for="username">
+            <h4>Username</h4>
             <input required style="width:100%; height:40px;     width: 100%;
     height: 40px;
     border-radius: 15px;
     border: none;
     border: 1px solid #7f7f7f;
-    padding-left:15px;" type="email" name="email" id="email" placeholder="Enter your email....">
+    padding-left:15px;" type="text" name="username" id="username" placeholder="Enter your username....">
           </label>
 
           <label for="password">
