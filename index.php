@@ -88,6 +88,8 @@
     <script src= 'scripts/cards.js'></script>
 </body>
 </html>
+
+<!-- retrive data about recent questions>
 <?php
         $result = mysqli_query($conn,"SELECT * FROM question ORDER BY created_at DESC LIMIT 10;");
 

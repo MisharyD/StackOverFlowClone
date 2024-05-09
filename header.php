@@ -1,7 +1,9 @@
-
+<?php 
+  session_start();
+?>
 <link rel = "stylesheet" href = "styles/header.css">
 <div class="header">
-    <div class="logo"> <a href="https://stackoverflow.com">
+    <div class="logo"> <a href="index.php">
         <img src="images/stack.png" alt="logo"></a> <b>StackOverFlow</b></div>
     <div class="SrchBar">
       <form action="mainSearchHandler.php" method="POST">
@@ -19,4 +21,4 @@
     <div class="signUp"><a href="https://stackoverflow.com" id="login-hover" style="display: flex;
     justify-content: center;
     align-items: center;text-decoration: none;">Sign-Up</a></div>
-  </div>
+</div>
