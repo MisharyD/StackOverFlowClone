@@ -12,10 +12,12 @@ body {
 }
 
 a:visited {
-    color: inherit;
-    /* Use the same color as regular links */
+    color: black;
 }
 
+a:visited:link {
+    color: black;
+}
 
 .header {
     display: grid;

@@ -41,7 +41,7 @@
 
             <div class="middle-body-container">
                 <input class="ask-question" type="button" name="ask-question" value="Ask Question">
-                
+
                 <h1>Recent Questions</h1> <!--header of the set-->
                 <!--the question tag-->
                 <div class="question-container" id = "recent-questions-container"> <!--container of the whole cards-->
@@ -52,7 +52,7 @@
                                 <p> answers </p>
                             </div>
                             <div class="question-content-tag">
-                                <div><a id="question" href="#">Question here </a></div>
+                                <div><a id="question" href="stackoverflow.com">Question here </a></div>
                                 <p id = "qTag"></p> <!--tags (each tag will have a span)-->
                             </div>
                         </div>

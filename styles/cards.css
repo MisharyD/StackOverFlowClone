@@ -47,8 +47,7 @@
 .question-content-tag a {
     color: blue;
     text-decoration: none;
-    font-weight: bold;
-    
+    font-weight: bold;  
 }
 
 .question-content-tag a:hover {
