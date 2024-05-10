@@ -120,6 +120,4 @@ function updateAnswerPagination() {
     }
 }
 
-// Display initial page for questions
-displayQuestions(currentPage);
 

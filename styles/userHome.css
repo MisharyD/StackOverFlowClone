@@ -146,22 +146,37 @@
     background-color: #d9534f; /* Darker red color on hover */
 }
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+.pages-container
+{
+    display:flex;
+    flex-direction: column;
 }
 
-.pagination button {
-    background-color: #f7f7f7;
+.pageButton{
+    color: black;
     color: #333;
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    margin: 0 2px;
-    cursor: pointer;
+    background-color: #ffffff;
+    font-weight: bold;
+    margin:8px;
+    padding:8px;
+    border:none;
+    /* when there is backgroundcolor for the currentPage*/
+    border-radius: 7px;
 }
 
-.pagination button.active {
-    background-color: #4CAF50;
+.pageButton:hover {
+    background-color: orange;
     color: white;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+/*overwriting the some properties in cards.css file*/
+.question-container
+{
+    max-height: 1000px;
+}
+.question
+{
+    display:flex;
 }

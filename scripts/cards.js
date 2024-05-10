@@ -1,4 +1,4 @@
-function addQuestions(containerId)
+function addQuestions(containerId,nbOfQuestions)
 {
     let questionsContainer = document.querySelector("#" + containerId);
     let card = document.querySelector(".question")

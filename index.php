@@ -139,7 +139,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         $containerId = "recent-questions-container";
         echo "<script>";
         //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
-        echo "addQuestions('$containerId'); addQuestionsInfo($recentQuestions, $tags, '$containerId');";
+        echo "addQuestions('$containerId'); addQuestionsInfo($recentQuestions, $tags, '$containerId',10);";
         echo "</script>";
 ?>
 
@@ -172,6 +172,6 @@ while ($row = mysqli_fetch_assoc($result)) {
      $containerId = "top-questions-container";
      echo "<script>";
      //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
-     echo "addQuestions('$containerId'); addQuestionsInfo($topQuestions, $tags, '$containerId');";    
+     echo "addQuestions('$containerId'); addQuestionsInfo($topQuestions, $tags, '$containerId',10);";    
      echo "</script>";
 ?>
