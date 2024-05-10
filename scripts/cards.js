@@ -4,7 +4,7 @@ function addQuestions(containerId,nbOfQuestions)
     let card = document.querySelector(".question")
 
     //add questions both containers
-    for(let i = 0; i<10; i++)
+    for(let i = 0; i<nbOfQuestions; i++)
         {   
             let actualCard = changeQuestionAtt(i, card);
             questionsContainer.appendChild(actualCard);
@@ -36,7 +36,7 @@ function addQuestionsInfo(questions, tags, containerId)
 {
     
     console.log(questions);
-    let questionsContainer = document.querySelector("#" + containerId)
+    let questionsContainer = document.querySelector("#" + containerId);
     for(let i=0; i<questions.length; i++)
         {
             questionsContainer.querySelector("#qAnswers" + i).innerHTML = questions[i]["num_answers"];

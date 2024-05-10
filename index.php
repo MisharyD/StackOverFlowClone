@@ -113,16 +113,15 @@ include ("database.php");
 <?php
         $result = mysqli_query($conn,"SELECT q.question_id, q.username, q.title, q.description, q.created_at, COUNT(a.answer_id) AS num_answers
         FROM question q
-        JOIN answer a ON q.question_id = a.question_id
+        join answer a on q.question_id = a.question_id
         GROUP BY q.question_id, q.title, q.description
         ORDER BY q.created_at DESC
         LIMIT 10;");
-
+        
 $recentQuestions = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $recentQuestions[] = $row;
 }
-
         //an array which also contain an array for tags for every question
         $tags = array();
         for($i = 0; $i< count($recentQuestions); $i++)
@@ -139,7 +138,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         $containerId = "recent-questions-container";
         echo "<script>";
         //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
-        echo "addQuestions('$containerId'); addQuestionsInfo($recentQuestions, $tags, '$containerId',10);";
+        echo "addQuestions('$containerId', 10); addQuestionsInfo($recentQuestions, $tags, '$containerId',10);";
         echo "</script>";
 ?>
 
@@ -172,6 +171,6 @@ while ($row = mysqli_fetch_assoc($result)) {
      $containerId = "top-questions-container";
      echo "<script>";
      //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
-     echo "addQuestions('$containerId'); addQuestionsInfo($topQuestions, $tags, '$containerId',10);";    
+     echo "addQuestions('$containerId',10); addQuestionsInfo($topQuestions, $tags, '$containerId',10);";    
      echo "</script>";
 ?>

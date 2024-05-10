@@ -51,8 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </head>
 
-
-
 <body>
 
     <div class="header">
@@ -74,8 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     justify-content: center;
     align-items: center;text-decoration: none;">Sign-Up</a></div>
     </div>
-
-
 
     <div class="content">
 
