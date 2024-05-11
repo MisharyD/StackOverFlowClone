@@ -13,8 +13,7 @@
     box-sizing: border-box;
 }
 
-.question {
-
+.questionCard {
     display: flex;
     justify-content: space-between;
     border-bottom: 2px solid gray;
