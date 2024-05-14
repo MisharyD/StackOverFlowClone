@@ -195,11 +195,6 @@ function addQuestionsInfo(questions, tags, containerId)
 
 function addAnswersInfo(answers, avgRating, tags, containerId)
 {
-    console.log(answers);
-    console.log(avgRating);
-    console.log(tags);
-    console.log(containerId);
-
     nbOfPages = Math.ceil(answers.length /10);
     let pagesContainer = document.querySelector("#" + containerId);
     let nbOfAnswers = answers.length;
@@ -218,14 +213,13 @@ function addAnswersInfo(answers, avgRating, tags, containerId)
 
             //manual elipsis
             let description;
-            if(answers[j + (i *10)]["description"].length > 40)
-                {
-                    description = answers[j + (i *10)]["description"].substring(0,40) + "...";
-                    console.log(description); 
-                }
-            else
-                description = answers[j + (i *10)]["description"];
+            // if(answers[j + (i *10)]["description"].length > 40)
+            //     {
+            //         description = answers[j + (i *10)]["description"].substring(0,40) + "...";
+            //     }
+            // else
 
+            description = answers[j + (i *10)]["description"];
             answersContainer.querySelector("#answer" + j).innerHTML = description;
             answersContainer.querySelector("#aTime" + j).innerHTML = "Answered by " + answers[j + (i *10)]["userName"] + " at " + answers[j + (i *10)].created_at; 
 

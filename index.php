@@ -1,6 +1,6 @@
 <?php
 session_start();
-include ("database.php");
+include("database.php");
 ?>
 
 <!DOCTYPE html>
@@ -17,9 +17,9 @@ include ("database.php");
 
 <body>
     <!-- Header part-->
-    
+
     <?php
-    
+
     if (isset($_SESSION["username"])) {
         include "LoggedIn-header.php";
     } else {
@@ -34,19 +34,28 @@ include ("database.php");
             <div class="left-body-container">
                 <ul class="tab-container">
                     <li class="current-page tab">
-                        <img src="images/homeIcon.png" width="20px" height=auto>
-                        <div>Home</div>
+                        <a href="index.php">
+                            <img src="images/homeIcon.png" width="20px" height=auto>
+                            <div>Home</div>
+                        </a>
                     </li>
-                    <li class="tab"> 
-                        <img src="images/question.png" width="15px" height=auto>
-                        <div> Questions</div>
+                    <li class="tab">
+                        <a href="userHome.php">
+                            <img src="images/user.png" width="20px" height=auto>
+                            <div>Profile</div>
+                        </a>
                     </li>
-                    <li class="tab"> 
-                        <img src="images/user.png" width="20px" height=auto>
-                        <div> Users</div>
+                    <li class="tab">
+                        <a href="#">
+                            <img src="images/question.png" width="15px" height=auto>
+                            <div> Questions</div>
+                        </a>
                     </li>
-                    <li class="tab"> <img src="images/tag.png" width="20px" height=auto>
-                        <div>Tags</div>
+                    <li class="tab">
+                        <a href="#">
+                            <img src="images/tag.png" width="20px" height=auto>
+                            <div>Tags</div>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -57,7 +66,7 @@ include ("database.php");
                 <h1>Recent Questions</h1> <!--header of the set-->
                 <!--the question tag-->
                 <div class="question-container" id="recent-questions-container"> <!--container of the whole cards-->
-                    <div class="question" id="card" style="display:none"> <!--container of one card-->
+                    <div class="questionCard" id="card" style="display:none"> <!--container of one card-->
                         <div class="left-container">
                             <!--div that consist of votes div, answers div, and question-content-tag-->
                             <div class="answers">
@@ -75,8 +84,8 @@ include ("database.php");
                     </div>
                 </div>
                 <h1> Top Questions</h1>
-                <div class="question-container" id = "top-questions-container"> <!--container of the whole cards-->
-                    <div class="question" style = "display:none"> <!--container of one card-->
+                <div class="question-container" id="top-questions-container"> <!--container of the whole cards-->
+                    <div class="question" style="display:none"> <!--container of one card-->
                         <div class="left-container"> <!--div that consist of votes div, answers div, and question-content-tag-->
                             <div class="answers">
                                 <p id="answerQ1">0</p> <!--number of answers here -->
@@ -88,9 +97,14 @@ include ("database.php");
                                 <!--tags (each tag will have a span)-->
                             </div>
                         </div>
-
-                        <div class="time" id="qTime">
-                            asked 3 months ago by Abcd
+                        <div class="right-container">
+                            <div style="visibility: hidden;">
+                                <button id="del" class="delete-edit-buttons delete">Delete</button>
+                                <button id="edit" class="delete-edit-buttons edit">Edit</button>
+                            </div>
+                            <div class="time" id="aTime">
+                                answered 3 months ago by Abcd
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,66 +125,76 @@ include ("database.php");
 
 <!-- retrive data about recent questions-->
 <?php
-        $result = mysqli_query($conn,"SELECT q.question_id, q.username, q.title, q.description, q.created_at, COUNT(a.answer_id) AS num_answers
+$result = mysqli_query($conn, "SELECT q.question_id, q.username, q.title, q.description, q.created_at, COUNT(a.answer_id) AS num_answers
         FROM question q
         join answer a on q.question_id = a.question_id
         GROUP BY q.question_id, q.title, q.description
         ORDER BY q.created_at DESC
         LIMIT 10;");
-        
+
 $recentQuestions = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $recentQuestions[] = $row;
 }
-        //an array which also contain an array for tags for every question
-        $tags = array();
-        for($i = 0; $i< count($recentQuestions); $i++)
-        {
-            $tags[$i] = array();
-            $curr = $recentQuestions[$i]["question_id"];
-            $result = mysqli_query($conn,"SELECT tagName FROM tag WHERE question_id = $curr");
-            while($row = mysqli_fetch_assoc($result))
-                $tags[$i][] = $row;
-        }
+//an array which also contain an array for tags for every question
+$tags = array();
+for ($i = 0; $i < count($recentQuestions); $i++) {
+    $tags[$i] = array();
+    $curr = $recentQuestions[$i]["question_id"];
+    $result = mysqli_query($conn, "SELECT tagName FROM tag WHERE question_id = $curr");
+    while ($row = mysqli_fetch_assoc($result))
+        $tags[$i][] = $row;
+}
 
-        $recentQuestions = json_encode($recentQuestions);
-        $tags = json_encode($tags);
-        $containerId = "recent-questions-container";
-        echo "<script>";
-        //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
-        echo "addQuestions('$containerId', 10); addQuestionsInfo($recentQuestions, $tags, '$containerId',10);";
-        echo "</script>";
+$recentQuestions = json_encode($recentQuestions);
+$tags = json_encode($tags);
+$containerId = "recent-questions-container";
+echo "<script>";
+//addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
+echo "addQuestions('$containerId', 10); addQuestionsInfo($recentQuestions, $tags, '$containerId',10);";
+echo "</script>";
 ?>
 
 <!-- retrive data about top questions-->
-<?php 
-     $result = mysqli_query($conn,"SELECT q.question_id, q.username, q.title, q.description, q.created_at, COUNT(a.answer_id) AS num_answers
+<?php
+$result = mysqli_query($conn, "SELECT q.question_id, q.username, q.title, q.description, q.created_at, COUNT(a.answer_id) AS num_answers
      FROM question q
      JOIN answer a ON q.question_id = a.question_id
      GROUP BY q.question_id, q.title, q.description
      ORDER BY num_answers DESC
      LIMIT 10;");
 
-     $topQuestions = array();
-     while($row = mysqli_fetch_assoc($result))
-         $topQuestions[] = $row;
+$topQuestions = array();
+while ($row = mysqli_fetch_assoc($result))
+    $topQuestions[] = $row;
 
-     //an array which also contain an array for tags for every question
-     $tags = array();
-     for($i = 0; $i< count($topQuestions); $i++)
-     {
-         $tags[$i] = array();
-         $curr = $topQuestions[$i]["question_id"];
-         $result = mysqli_query($conn,"SELECT tagName FROM tag WHERE question_id = $curr");
-         while($row = mysqli_fetch_assoc($result))
-             $tags[$i][] = $row;
-     }
+//an array which also contain an array for tags for every question
+$tags = array();
+for ($i = 0; $i < count($topQuestions); $i++) {
+    $tags[$i] = array();
+    $curr = $topQuestions[$i]["question_id"];
+    $result = mysqli_query($conn, "SELECT tagName FROM tag WHERE question_id = $curr");
+    while ($row = mysqli_fetch_assoc($result))
+        $tags[$i][] = $row;
+}
 
-     $topQuestions = json_encode($topQuestions);
-     $tags = json_encode($tags);
-     $containerId = "top-questions-container";
-     echo "<script>";
-     //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
-     echo "addQuestions('$containerId',10); addQuestionsInfo($topQuestions, $tags, '$containerId',10);";    
-     echo "</script>";
+$topQuestions = json_encode($topQuestions);
+$tags = json_encode($tags);
+$containerId = "top-questions-container";
+if(!isset($_SESSION["username"]))
+{
+    echo "<script>";
+    //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
+    echo "addQuestions('$containerId',10); addQuestionsInfo($topQuestions, $tags, '$containerId');";
+    echo "</script>";
+}
+
+else
+{
+    $currUsername = $_SESSION["username"];
+    echo "<script>";
+    //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
+    echo "addQuestions('$containerId',10); addQuestionsInfoAndButtons($topQuestions, $tags, '$containerId', '$currUsername');";
+    echo "</script>";
+}
 ?>

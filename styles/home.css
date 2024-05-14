@@ -44,11 +44,13 @@ body {
 
 }
 
-.tab
+.tab a
 {
     display:flex;
     padding:8px;
-    gap:1em
+    gap:1em;
+    text-decoration: none;
+    color:black;
 }
 
 .tab:hover

@@ -1,7 +1,7 @@
 function addQuestions(containerId,nbOfQuestions)
 {
     let questionsContainer = document.querySelector("#" + containerId);
-    let card = document.querySelector(".question")
+    let card = document.querySelector(".questionCard")
 
     //add questions both containers
     for(let i = 0; i<nbOfQuestions; i++)
@@ -34,8 +34,6 @@ function changeQuestionAtt(questionNb,card)
 
 function addQuestionsInfo(questions, tags, containerId)
 {
-    
-    console.log(questions);
     let questionsContainer = document.querySelector("#" + containerId);
     for(let i=0; i<questions.length; i++)
         {
@@ -52,6 +50,31 @@ function addQuestionsInfo(questions, tags, containerId)
                 tag.innerHTML = tags[i][j].tagName;
                 tagContainer.appendChild(tag);
             }
-            questionsContainer.querySelector("#card" + i).style.display = "flex";
+            card = questionsContainer.querySelector("#card" + i);
+            card.style.display = "flex";
+        }
+}
+
+//to add the delete and edit button
+function addQuestionsInfoAndButtons(questions, tags, containerId, currUsername)
+{
+    let questionsContainer = document.querySelector("#" + containerId);
+    for(let i=0; i<questions.length; i++)
+        {
+            questionsContainer.querySelector("#qAnswers" + i).innerHTML = questions[i]["num_answers"];
+            questionsContainer.querySelector("#question" + i).innerHTML = questions[i]["title"];
+            questionsContainer.querySelector("#qTime" + i).innerHTML = "Asked by " + questions[i]["username"] + " at " + questions[i].created_at; 
+
+            let tagContainer = questionsContainer.querySelector("#qTag" + i);
+            for(let j = 0; j<tags[i].length ; j++)
+            {
+                let tag = document.createElement("span")
+                tag.classList.add("tag");
+                //add tag j for question i
+                tag.innerHTML = tags[i][j].tagName;
+                tagContainer.appendChild(tag);
+            }
+            card = questionsContainer.querySelector("#card" + i);
+            card.style.display = "flex";
         }
 }
