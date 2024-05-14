@@ -56,11 +56,12 @@ function addQuestionsInfo(questions, tags, containerId)
 }
 
 //to add the delete and edit button
-function addQuestionsInfoAndButtons(questions, tags, containerId, currUsername)
+function addQuestionsInfoAndButtons(questions,tags, containerId, currUsername)
 {
     let questionsContainer = document.querySelector("#" + containerId);
     for(let i=0; i<questions.length; i++)
         {
+
             questionsContainer.querySelector("#qAnswers" + i).innerHTML = questions[i]["num_answers"];
             questionsContainer.querySelector("#question" + i).innerHTML = questions[i]["title"];
             questionsContainer.querySelector("#qTime" + i).innerHTML = "Asked by " + questions[i]["username"] + " at " + questions[i].created_at; 
@@ -76,5 +77,10 @@ function addQuestionsInfoAndButtons(questions, tags, containerId, currUsername)
             }
             card = questionsContainer.querySelector("#card" + i);
             card.style.display = "flex";
+
+            if(currUsername == questions[i]["username"])
+            {
+                card.querySelector(".toggle-delEdit-buttons").style.visibility = "visible";
+            }
         }
 }

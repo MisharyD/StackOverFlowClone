@@ -157,85 +157,85 @@ if ($conn->connect_error) {
 
 <!-- load questions -->
 <?php
-$username = $_SESSION["username"];
-$result = mysqli_query($conn, "SELECT q.question_id, q.username, q.title, q.description, q.created_at, COUNT(a.answer_id) AS num_answers
-    FROM question q
-    join answer a on q.question_id = a.question_id
-    WHERE q.username = '$username'
-    GROUP BY q.question_id, q.title, q.description
-    ORDER BY q.created_at DESC");
+    $username = $_SESSION["username"];
+    $result = mysqli_query($conn, "SELECT q.question_id, q.username, q.title, q.description, q.created_at, COUNT(a.answer_id) AS num_answers
+        FROM question q
+        LEFT join answer a on q.question_id = a.question_id
+        WHERE q.username = '$username'
+        GROUP BY q.question_id, q.title, q.description
+        ORDER BY q.created_at DESC");
 
-$questions = array();
-while ($row = mysqli_fetch_assoc($result))
-    $questions[] = $row;
-$tags = array();
-for ($i = 0; $i < count($questions); $i++) {
-    $tags[$i] = array();
-    $curr = $questions[$i]["question_id"];
-    $result = mysqli_query($conn, "SELECT tagName FROM tag WHERE question_id = $curr");
+    $questions = array();
     while ($row = mysqli_fetch_assoc($result))
-        $tags[$i][] = $row;
-}
+        $questions[] = $row;
+    $tags = array();
+    for ($i = 0; $i < count($questions); $i++) {
+        $tags[$i] = array();
+        $curr = $questions[$i]["question_id"];
+        $result = mysqli_query($conn, "SELECT tagName FROM tag WHERE question_id = $curr");
+        while ($row = mysqli_fetch_assoc($result))
+            $tags[$i][] = $row;
+    }
 
-$nbOfQuestions = count($questions);
-$questions  = json_encode($questions);
-$tags = json_encode($tags);
-$containerId = "questions-pages-container";
-echo "<script>";
-//addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
-echo "addQuestionsPage($nbOfQuestions, '$containerId'); addQuestionsInfo($questions, $tags, '$containerId');";
-echo "</script>";
+    $nbOfQuestions = count($questions);
+    $questions  = json_encode($questions);
+    $tags = json_encode($tags);
+    $containerId = "questions-pages-container";
+    echo "<script>";
+    //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
+    echo "addQuestionsPage($nbOfQuestions, '$containerId'); addQuestionsInfo($questions, $tags, '$containerId');";
+    echo "</script>";
 ?>
 
 <!-- load answers -->
 <?php
-$result = mysqli_query($conn, "SELECT *
-     FROM answer
-     WHERE username = '$username'
-     ORDER BY created_at DESC");
+    $result = mysqli_query($conn, "SELECT *
+        FROM answer
+        WHERE username = '$username'
+        ORDER BY created_at DESC");
 
-$answers = array();
-while ($row = mysqli_fetch_assoc($result))
-    $answers[] = $row;
-
-$rating = array();
-for ($i = 0; $i < count($answers); $i++) {
-    $rating[$i] = array();
-    $curr = $answers[$i]["answer_id"];
-    $result = mysqli_query($conn, "SELECT rating FROM rating WHERE answer_id = $curr");
+    $answers = array();
     while ($row = mysqli_fetch_assoc($result))
-        $rating[$i][] = $row;
-}
+        $answers[] = $row;
 
-$avgRating = array();
-for ($i = 0; $i < count($rating); $i++) {
-    $sum = 0;
-    for ($j = 0; $j < count($rating[$i]); $j++)
-        $sum += $rating[$i][$j]['rating'];
-    if (count($rating[$i]) != 0)
-        $avgRating[] = $sum / count($rating[$i]);
-    else
-        $avgRating[] = 0;
-}
+    $rating = array();
+    for ($i = 0; $i < count($answers); $i++) {
+        $rating[$i] = array();
+        $curr = $answers[$i]["answer_id"];
+        $result = mysqli_query($conn, "SELECT rating FROM rating WHERE answer_id = $curr");
+        while ($row = mysqli_fetch_assoc($result))
+            $rating[$i][] = $row;
+    }
 
-$tags = array();
-for ($i = 0; $i < count($answers); $i++) {
-    $tags[$i] = array();
-    $curr = $answers[$i]["question_id"];
-    $result = mysqli_query($conn, "SELECT tagName FROM tag WHERE question_id = $curr");
-    while ($row = mysqli_fetch_assoc($result))
-        $tags[$i][] = $row;
-}
+    $avgRating = array();
+    for ($i = 0; $i < count($rating); $i++) {
+        $sum = 0;
+        for ($j = 0; $j < count($rating[$i]); $j++)
+            $sum += $rating[$i][$j]['rating'];
+        if (count($rating[$i]) != 0)
+            $avgRating[] = $sum / count($rating[$i]);
+        else
+            $avgRating[] = 0;
+    }
 
-$nbOfAnswers = count($answers);
-$answers  = json_encode($answers);
-$avgRating = json_encode($avgRating);
-$tags = json_encode($tags);
-$containerId = "answers-pages-container";
-echo "<script>";
-//addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
-echo "addAnswersPage($nbOfAnswers, '$containerId'); addAnswersInfo($answers, $avgRating , $tags, '$containerId');";
-echo "</script>";
+    $tags = array();
+    for ($i = 0; $i < count($answers); $i++) {
+        $tags[$i] = array();
+        $curr = $answers[$i]["question_id"];
+        $result = mysqli_query($conn, "SELECT tagName FROM tag WHERE question_id = $curr");
+        while ($row = mysqli_fetch_assoc($result))
+            $tags[$i][] = $row;
+    }
+
+    $nbOfAnswers = count($answers);
+    $answers  = json_encode($answers);
+    $avgRating = json_encode($avgRating);
+    $tags = json_encode($tags);
+    $containerId = "answers-pages-container";
+    echo "<script>";
+    //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
+    echo "addAnswersPage($nbOfAnswers, '$containerId'); addAnswersInfo($answers, $avgRating , $tags, '$containerId');";
+    echo "</script>";
 ?>
 
 <!-- delete card -->

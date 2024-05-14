@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div id="errorMSG"></div>
 
       <div class="logo1"><a href="https://stackoverflow.com">
-          <img src="logoSOV.png" alt="logo"></a></div>
+          <img src="images/stack.png" alt="logo"></a></div>
 
 
       <div class="main">

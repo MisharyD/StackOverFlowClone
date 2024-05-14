@@ -1,5 +1,5 @@
 <div class="header2">
-    <div class="logo"> <a href="signIn.php">
+    <div class="logo"> <a href="index.php.php">
             <img src="images/stack.png" alt="logo"></a> <b>StackOverFlow</b></div>
     <div class="SrchBar">
         <form action="mainSearchHandler.php" method="POST">

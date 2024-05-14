@@ -78,8 +78,14 @@ include("database.php");
                                 <p id="qTag"></p> <!--tags (each tag will have a span)-->
                             </div>
                         </div>
-                        <div class="time" id="qTime">
-                            asked 3 months ago by Abcd
+                        <div class="right-container">
+                            <div class="toggle-delEdit-buttons" style="visibility: hidden;">
+                                <button id="del" class="delete-edit-buttons delete">Delete</button>
+                                <button id="edit" class="delete-edit-buttons edit">Edit</button>
+                            </div>
+                            <div class="time" id="qTime">
+                                answered 3 months ago by Abcd
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,11 +104,11 @@ include("database.php");
                             </div>
                         </div>
                         <div class="right-container">
-                            <div style="visibility: hidden;">
+                            <div class="toggle-delEdit-buttons" style="visibility: hidden;">
                                 <button id="del" class="delete-edit-buttons delete">Delete</button>
                                 <button id="edit" class="delete-edit-buttons edit">Edit</button>
                             </div>
-                            <div class="time" id="aTime">
+                            <div class="time" id="qTime">
                                 answered 3 months ago by Abcd
                             </div>
                         </div>
@@ -125,76 +131,81 @@ include("database.php");
 
 <!-- retrive data about recent questions-->
 <?php
-$result = mysqli_query($conn, "SELECT q.question_id, q.username, q.title, q.description, q.created_at, COUNT(a.answer_id) AS num_answers
-        FROM question q
-        join answer a on q.question_id = a.question_id
-        GROUP BY q.question_id, q.title, q.description
-        ORDER BY q.created_at DESC
-        LIMIT 10;");
+    $result = mysqli_query($conn,"SELECT q.question_id, q.username, q.title, q.description, q.created_at, COUNT(a.answer_id) AS num_answers
+    FROM question q
+    LEFT JOIN answer a on q.question_id = a.question_id
+    GROUP BY q.question_id, q.title, q.description
+    ORDER BY q.created_at DESC
+    LIMIT 10;");
 
-$recentQuestions = array();
-while ($row = mysqli_fetch_assoc($result)) {
-    $recentQuestions[] = $row;
-}
-//an array which also contain an array for tags for every question
-$tags = array();
-for ($i = 0; $i < count($recentQuestions); $i++) {
-    $tags[$i] = array();
-    $curr = $recentQuestions[$i]["question_id"];
-    $result = mysqli_query($conn, "SELECT tagName FROM tag WHERE question_id = $curr");
-    while ($row = mysqli_fetch_assoc($result))
-        $tags[$i][] = $row;
-}
+    $recentQuestions = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $recentQuestions[] = $row;
+    }
 
-$recentQuestions = json_encode($recentQuestions);
-$tags = json_encode($tags);
-$containerId = "recent-questions-container";
-echo "<script>";
-//addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
-echo "addQuestions('$containerId', 10); addQuestionsInfo($recentQuestions, $tags, '$containerId',10);";
-echo "</script>";
+    //an array which also contain an array for tags for every question
+    $tags = array();
+    for ($i = 0; $i < count($recentQuestions); $i++) {
+        $tags[$i] = array();
+        $curr = $recentQuestions[$i]["question_id"];
+        $result = mysqli_query($conn, "SELECT tagName FROM tag WHERE question_id = $curr");
+        while ($row = mysqli_fetch_assoc($result))
+            $tags[$i][] = $row;
+    }
+
+    $recentQuestions = json_encode($recentQuestions);
+    $tags = json_encode($tags);
+    $containerId = "recent-questions-container";
+    if (!isset($_SESSION["username"])) {
+        echo "<script>";
+        //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
+        echo "addQuestions('$containerId',10); addQuestionsInfo($recentQuestions, $tags, '$containerId');";
+        echo "</script>";
+    } else {
+        $currUsername = $_SESSION["username"];
+        echo "<script>";
+        //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
+        echo "addQuestions('$containerId',10); addQuestionsInfoAndButtons($recentQuestions, $tags, '$containerId', '$currUsername');";
+        echo "</script>";
+    }
 ?>
 
 <!-- retrive data about top questions-->
 <?php
-$result = mysqli_query($conn, "SELECT q.question_id, q.username, q.title, q.description, q.created_at, COUNT(a.answer_id) AS num_answers
-     FROM question q
-     JOIN answer a ON q.question_id = a.question_id
-     GROUP BY q.question_id, q.title, q.description
-     ORDER BY num_answers DESC
-     LIMIT 10;");
+    $result = mysqli_query($conn,"SELECT q.question_id, q.username, q.title, q.description, q.created_at, COUNT(a.answer_id) AS num_answers
+    FROM question q
+    LEFT JOIN answer a ON q.question_id = a.question_id
+    GROUP BY q.question_id, q.title, q.description
+    ORDER BY num_answers DESC
+    LIMIT 10;");
 
-$topQuestions = array();
-while ($row = mysqli_fetch_assoc($result))
-    $topQuestions[] = $row;
-
-//an array which also contain an array for tags for every question
-$tags = array();
-for ($i = 0; $i < count($topQuestions); $i++) {
-    $tags[$i] = array();
-    $curr = $topQuestions[$i]["question_id"];
-    $result = mysqli_query($conn, "SELECT tagName FROM tag WHERE question_id = $curr");
+    $topQuestions = array();
     while ($row = mysqli_fetch_assoc($result))
-        $tags[$i][] = $row;
-}
+        $topQuestions[] = $row;
+    
+    //an array which also contain an array for tags for every question
+    $tags = array();
+    for ($i = 0; $i < count($topQuestions); $i++) {
+        $tags[$i] = array();
+        $curr = $topQuestions[$i]["question_id"];
+        $result = mysqli_query($conn, "SELECT tagName FROM tag WHERE question_id = $curr");
+        while ($row = mysqli_fetch_assoc($result))
+            $tags[$i][] = $row;
+    }
 
-$topQuestions = json_encode($topQuestions);
-$tags = json_encode($tags);
-$containerId = "top-questions-container";
-if(!isset($_SESSION["username"]))
-{
-    echo "<script>";
-    //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
-    echo "addQuestions('$containerId',10); addQuestionsInfo($topQuestions, $tags, '$containerId');";
-    echo "</script>";
-}
-
-else
-{
-    $currUsername = $_SESSION["username"];
-    echo "<script>";
-    //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
-    echo "addQuestions('$containerId',10); addQuestionsInfoAndButtons($topQuestions, $tags, '$containerId', '$currUsername');";
-    echo "</script>";
-}
+    $topQuestions = json_encode($topQuestions);
+    $tags = json_encode($tags);
+    $containerId = "top-questions-container";
+    if (!isset($_SESSION["username"])) {
+        echo "<script>";
+        //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
+        echo "addQuestions('$containerId',10); addQuestionsInfo($topQuestions, $tags, '$containerId');";
+        echo "</script>";
+    } else {
+        $currUsername = $_SESSION["username"];
+        echo "<script>";
+        //addQuestions() is called here to ensure that addRecentQuestionsInfo() is only called after the cards are loaded
+        echo "addQuestions('$containerId',10); addQuestionsInfoAndButtons($topQuestions, $tags, '$containerId', '$currUsername');";
+        echo "</script>";
+    }
 ?>
