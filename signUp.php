@@ -1,6 +1,18 @@
 <?php
 session_start();
-include("database.php");
+
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "381-project";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 // Initialize error message variable
 $error_message = "";
@@ -8,9 +20,9 @@ $error_message = "";
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
-    $username = $_POST["username"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    $username = mysqli_real_escape_string($conn, $_POST["username"]);
+    $email = mysqli_real_escape_string($conn, $_POST["email"]);
+    $password = mysqli_real_escape_string($conn, $_POST["password"]);
     $rememberMe = isset($_POST["rememberMe"]) ? 1 : 0;
 
     // Check if the username or email already exists in the database
@@ -51,9 +63,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </head>
 
+
+
 <body>
 
-    <?php include("notLoggedIn-header.php");?>
+    <div class="header">
+        <div class="logo"> <a href="https://stackoverflow.com">
+                <img src="images/stack.png" alt="logo"></a> <b>StackOverFlow</b></div>
+        <div class="SrchBar">
+            <form action="searchHome.php" method="GET">
+                <input style="padding-left:15px" type="text" name="searchBar" id="searchBar" placeholder="Search....">
+            </form>
+        </div>
+        <div class="acc"><svg style="color: orange;" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+            </svg></div>
+        <div class="login"><a href="https://stackoverflow.com" id="login-hover"
+                style=" align-items: center; text-decoration: none">Login</a></div>
+
+        <div class="signUp"><a href="https://stackoverflow.com" id="login-hover" style=" display: flex;
+    justify-content: center;
+    align-items: center;text-decoration: none;">Sign-Up</a></div>
+    </div>
+
+
 
     <div class="content">
 
