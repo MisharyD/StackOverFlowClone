@@ -1,27 +1,30 @@
 .question-container {
     background-color: #fdf7e2;
     border-radius: 8px;
-    margin: 20px auto;  
-    width: 800px;  
-    max-height: 500px; 
-    overflow-y: auto;
+    margin: 20px auto;
+    width: 800px;
+    overflow-y: scroll;
+    max-height: 500px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 * {
     box-sizing: border-box;
 }
 
-.questionCard {
+.question {
+
     display: flex;
     justify-content: space-between;
     border-bottom: 2px solid gray;
     padding: 10px;
     margin: 0;
     text-align: center;
-    height: 100px; 
+    height: 100px;
     gap: 1em;
-    border-radius: 8px; 
-    box-shadow: 0 0 10px rgba(0,0,0,0.1)   
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
 }
 
 .question-content-tag {
@@ -29,6 +32,7 @@
     flex-direction: column;
     justify-content: space-between;
     margin-top: 0;
+
 }
 
 .question-content-tag p {
@@ -37,30 +41,25 @@
 }
 
 .question:last-child {
-    border-bottom: none; /* Removes border from the last card if not needed */
+    border-bottom: none;
+    /* Removes border from the last card if not needed */
 }
 
 .question-content-tag a {
     color: blue;
     text-decoration: none;
     font-weight: bold;
-    display: block;
-    white-space: nowrap; 
-    text-overflow: ellipsis;
-    overflow: hidden;
-    width:400px; 
-    text-align: left;  
+
 }
 
 .question-content-tag a:hover {
     text-decoration: underline;
 }
 
-.tag{
+.tag {
     font-size: 0.8em;
     align-self: flex-end;
-    color: hsla(210,77%,36%,1); ;
-    background-color: hsla(210,80%,93%,1);
+    background-color: #bfc6cd;
     margin-right: 5pt;
 }
 
@@ -68,10 +67,11 @@
     font-size: 0.8em;
     color: #777;
     align-self: flex-end;
-    
+
 }
 
-.votes, .answers {
+.votes,
+.answers {
     font-weight: bold;
     margin-right: 10px;
     align-self: flex-end;
@@ -81,25 +81,3 @@
     display: flex;
     gap: 1em;
 }
-
-.right-container
-{
-    display:flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.delete-edit-buttons
-{
-    background-color: #fdf7e2;
-    border: none;
-    margin-right: 16px;
-    cursor:pointer;
-}
-
-.delete
-{
-    color:rgb(236, 70, 70);
-}
-
-
