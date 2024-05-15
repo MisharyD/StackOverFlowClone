@@ -56,10 +56,6 @@ a:visited {
     justify-content: center;
     align-items: center;
 }
-.acc a:hover {
-    background-color: #ccc;
-    border-radius: 3px;
-}
 
 .login {
     grid-area: login;
@@ -111,10 +107,6 @@ a:visited {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-#signOut-hover:link {
-    color: black;
 }
 
 #signOut-hover:hover {
