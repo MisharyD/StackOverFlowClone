@@ -243,15 +243,14 @@ if ($conn->connect_error) {
     //$_GET["title"] may be a title for a question or a description of an answer
     if (isset($_GET["type"]) && isset($_GET["deletePram"])) {
         if ($_GET["type"] == "true") {
-            //mysqli_query($conn,"DELETE FROM question WHERE title = '{$_GET['deletePram']}' ");
-            echo "<script>window.location.href ='userHome.php?deleted=' + encodeURIComponent('question') </script>";
+            mysqli_query($conn,"DELETE FROM question WHERE title = '{$_GET['deletePram']}' ");
+            echo "<script>window.location.href ='index.php?deleted=' + encodeURIComponent('question') </script>";
         } else {
-            echo "answer";
-            //mysqli_query($conn,"DELETE FROM answer WHERE description = '{$_GET['deletePram']}' ");
-            echo "<script>window.location.href ='userHome.php?deleted=' + encodeURIComponent('answer') </script>";
+            mysqli_query($conn,"DELETE FROM answer WHERE description = '{$_GET['deletePram']}' ");
+            echo "<script>window.location.href ='index.php?deleted=' + encodeURIComponent('answer') </script>";
         }
     }
-    ?>
+?>
 
     <!-- show deleted message -->
     <?php

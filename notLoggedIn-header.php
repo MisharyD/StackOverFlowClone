@@ -2,7 +2,7 @@
     <div class="logo"> <a href="index.php">
             <img src="images/stack.png" alt="logo"></a> <b>StackOverFlow</b></div>
     <div class="SrchBar">
-        <form action="mainSearchHandler.php" method="POST">
+        <form action="searchHome.php" method="GET">
             <input style="padding-left:15px" type="text" name="searchBar" id="searchBar" placeholder="Search....">
         </form>
     </div>

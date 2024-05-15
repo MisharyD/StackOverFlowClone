@@ -8,9 +8,9 @@ $error_message = "";
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
-    $username = $_POST["username"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    $username = mysqli_real_escape_string($conn, $_POST["username"]);
+    $email = mysqli_real_escape_string($conn, $_POST["email"]);
+    $password = mysqli_real_escape_string($conn, $_POST["password"]);
     $rememberMe = isset($_POST["rememberMe"]) ? 1 : 0;
 
     // Check if the username or email already exists in the database
