@@ -128,10 +128,52 @@ include("database.php");
         </div>
     </div>
     <script src='scripts/cards.js'></script>
+    <!-- Dashboard -->
+    <script>
+    // Once you have fetched the data, you can insert it into the corresponding HTML elements using JavaScript
+    document.querySelector('.noq').textContent = "<?php echo $numQuestions; ?>";
+    document.querySelector('.noc').textContent = "<?php echo $numComments; ?>";
+    document.querySelector('.noa').textContent = "<?php echo $numAnswers; ?>";
+
+
+    // Pass the link value to question.php
+
+    // Function to handle click on anchors with class "qat"
+    function handleQAClick(event) {
+        // Prevent the default behavior of the anchor (e.g., page navigation)
+        event.preventDefault();
+        // Get the text content of the clicked anchor
+        var questionText = this.textContent;
+        // Construct the URL using the extracted text
+        var destinationURL = 'question.php?qat=' + encodeURIComponent(questionText);
+        // Navigate to the constructed URL
+        window.location.href = destinationURL;
+        </script>
 </body>
 
 </html>
 
+<?php
+// Query to count the number of questions
+$queryQuestions = "SELECT COUNT(*) AS num_questions FROM question";
+$resultQuestions = mysqli_query($conn, $queryQuestions);
+$rowQuestions = mysqli_fetch_assoc($resultQuestions);
+$numQuestions = $rowQuestions['num_questions'];
+
+// Query to count the number of comments
+$queryComments = "SELECT COUNT(*) AS num_comments FROM comment";
+$resultComments = mysqli_query($conn, $queryComments);
+$rowComments = mysqli_fetch_assoc($resultComments);
+$numComments = $rowComments['num_comments'];
+
+// Query to count the number of answers
+$queryAnswers = "SELECT COUNT(*) AS num_answers FROM answer";
+$resultAnswers = mysqli_query($conn, $queryAnswers);
+$rowAnswers = mysqli_fetch_assoc($resultAnswers);
+$numAnswers = $rowAnswers['num_answers'];
+?>
+
+<!-- Dashboard -->
 <!-- retrive data about recent questions-->
 <?php
     $result = mysqli_query($conn,"SELECT q.question_id, q.username, q.title, q.description, q.created_at, COUNT(a.answer_id) AS num_answers
