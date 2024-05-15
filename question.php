@@ -164,9 +164,9 @@ if (isset($_GET['rating'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quesiton Page</title>
-    <link rel="stylesheet" href="CSS/home.css">
-    <link rel="stylesheet" href="CSS/header.css">
-    <link rel="stylesheet" href="CSS/Qsty.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/Qsty.css">
     <!-- <link rel="stylesheet" href="CSS/cards.css"> -->
 </head>
 
