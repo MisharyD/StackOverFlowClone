@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
 
-  <?php include("notLoggedIn-header.php"); ?>
+<?php include("notLoggedIn-header.php");?>
 
   <div class="content">
 
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       <div id="errorMSG"></div>
 
-      <div class="logo1"><a href="https://stackoverflow.com">
+      <div class="logo1"><a href="index.php">
           <img src="images/stack.png" alt="logo"></a></div>
 
 
@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
 
       <div class="dont-haveACC"> Don't Have An Account ?&nbsp&nbsp <a style="text-decoration:none; color:#146aff "
-          href="">Sign-Up</a> </div>
+          href="sign-up.php">Sign-Up</a> </div>
 
 
     </div>
@@ -127,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // // Function to show an alert with the error message
     function showErrorAlert() {
       <?php if (!empty($error_message)): ?>
-        var errorDiv = document.getElementByaId("errorMSG");
+        var errorDiv = document.getElementById("errorMSG");
         errorDiv.innerHTML = "<?php echo $error_message; ?>";
       <?php endif; ?>
     }

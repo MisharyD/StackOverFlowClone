@@ -123,6 +123,7 @@ body {
     color: white;
     font-weight: bold;
     box-shadow: 1px 7px 16px 13px rgba(0, 0, 0, 0.1);
+    padding:16px;
 }
 
 .numOfQuestions,

@@ -33,27 +33,27 @@ if ($conn->connect_error) {
     <div class="body">
         <div class="container">
             <div class="left-body-container">
-                <ul class="tab-container">
-                    <li class="tab">
+            <ul class="tab-container">
+                    <li class="current-page tab">
                         <a href="index.php">
                             <img src="images/homeIcon.png" width="20px" height=auto>
                             <div>Home</div>
                         </a>
                     </li>
-                    <li class="current-page tab">
+                    <li class="tab">
                         <a href="userHome.php">
                             <img src="images/user.png" width="20px" height=auto>
                             <div>Profile</div>
                         </a>
                     </li>
                     <li class="tab">
-                        <a href="#">
+                        <a href="searchHome.php">
                             <img src="images/question.png" width="15px" height=auto>
                             <div> Questions</div>
                         </a>
                     </li>
                     <li class="tab">
-                        <a href="#">
+                        <a href="tags.php">
                             <img src="images/tag.png" width="20px" height=auto>
                             <div>Tags</div>
                         </a>
@@ -65,11 +65,7 @@ if ($conn->connect_error) {
                 <div id="delete-answer-message" class="delete-message" style="display:none"> Answer was deleted succefully! </div>
                 <div class="user-info">
                     <img src="images/user.png" alt="User Image">
-                    <span>Username</span>
-                </div>
-                <div class="bio">
-                    <h3>bio</h3>
-                    <p>This is where the user's bio information will be displayed.</p>
+                    <span id = "username">Username</span>
                 </div>
                 <div class="toggle-switch">
                     <button type="button" class="QA-button" id="question-type">Questions</button>
@@ -114,7 +110,7 @@ if ($conn->connect_error) {
                         <div class="right-container">
                             <div>
                                 <button class="delete-edit-buttons delete">Delete</button>
-                                <button class="delete-edit-buttons edit">Edit</button>
+                                <button class="delete-edit-buttons editAnswer">Edit</button>
                             </div>
                             <div class="time" id="aTime">
                                 answered 3 months ago by Abcd
@@ -132,24 +128,8 @@ if ($conn->connect_error) {
         </div>
     </div>
     <script src="scripts/pages.js"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll(".delete").forEach((button) => button.addEventListener("click", function(e) {
-                var confirmation = confirm("Are you sure you want to delete?");
-
-                if (confirmation) {
-                    //this method was used to avoid searching using IDs
-                    let card = e.target.parentNode.parentNode.parentNode
-                    //determines if the card is a question card or an answer card
-                    let type = card.classList.contains("questionCard");
-                    let deletePram = card.querySelector("a").innerHTML;
-                    url = 'userHome.php?type=' + encodeURIComponent(type) + "&deletePram=" + encodeURIComponent(deletePram);
-                    window.location.href = url;
-                }
-            }));
-        })
-    </script>
+    <script src = "scripts/deleteEditQA.js"></script>
+    <script src = "scripts/questionLink.js"></script>
 </body>
 
 </html>
@@ -254,10 +234,15 @@ if ($conn->connect_error) {
 
     <!-- show deleted message -->
     <?php
-    if (isset($_GET["deleted"])) {
-        if ($_GET["deleted"] == "question")
-            echo "<script>document.querySelector('#delete-question-message ').style.display = 'block' </script>";
-        else if ($_GET["deleted"] == "answer")
-            echo "<script>document.querySelector('#delete-answer-message').style.display = 'block' </script>";
-    }
+        if (isset($_GET["deleted"])) {
+            if ($_GET["deleted"] == "question")
+                echo "<script>document.querySelector('#delete-question-message ').style.display = 'block' </script>";
+            else if ($_GET["deleted"] == "answer")
+                echo "<script>document.querySelector('#delete-answer-message').style.display = 'block' </script>";
+        }
+    ?>
+
+<!-- add user info -->
+<?php 
+    echo "<script> document.addEventListener('DOMContentLoaded', () => document.querySelector('#username').innerHTML = '{$_SESSION['username']}') </script>";
 ?>

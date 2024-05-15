@@ -118,9 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="haveACC"> Already Have An Account? &nbsp&nbsp <a style="text-decoration:none; color:#146aff "
-                    href="">Login</a> </div>
-
-
+                    href="sighIn.php">Login</a> </div>
         </div>
 
     </div>

@@ -12,6 +12,10 @@ body {
 
 .question-header {
     margin-bottom: 20px;
+    background-color: #eee;
+    padding-left: 15px;
+    padding-top: 15px;
+    border-radius: 10px;
 }
 
 .answer-section {
@@ -53,8 +57,8 @@ body {
     align-self: flex-end;
     color: hsla(210, 77%, 36%, 1);
     background-color: hsla(210, 80%, 93%, 1);
-    margin-right: 5pt;
-    padding: 6px;
+    /* margin-right: 5pt; */
+    padding: 4px;
     font-size: 12PX;
     FONT-WEIGHT: BOLD;
 }
@@ -63,7 +67,7 @@ body {
     display: flex;
     justify-content: space-between;
     width: fit-content;
-    background-color: white;
+
 }
 
 
@@ -80,11 +84,10 @@ body {
 .answer-description {}
 
 .answer-meta {
-    color: #797979
+    color: #797979;
 }
 
 .container-allAnswersWithItsComments {
-    background-color: #eee;
     padding: 15px;
     border-radius: 10px
 }
@@ -115,12 +118,12 @@ body {
 
 .formField {
     display: block;
-    margin: 35px 0 35px 15px;
+    margin: 35px 0;
     width: 400px;
     height: 55px;
 }
 
-.submissionButton {
+.submissionButton { /*  for submitting the comment*/
     background-color: orange;
     color: white;
     padding: 10px;
@@ -128,6 +131,24 @@ body {
     border-radius: 10px;
     border: none;
     margin-left: 15px;
+    display: none;
+    width: fit-content
+}
+
+.submitAnswer{ /* for submitting the answer */
+
+    background-color: orange;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    width: fit-content;
+}
+
+
+.text-comment{
+    display: none;
 }
 
 /* Hide the radio buttons */
@@ -160,4 +181,41 @@ input[type="radio"]:checked+label {
 
 .cont {
     display: inline-block;
+
+}
+
+
+
+.btn-comment {
+    padding: 8px 16px;
+    background-color: transparent;
+    color: #797979;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 103pt;
+    font-weight: bold;
+}
+
+.btn-comment:hover {
+    text-decoration: underline;
+}
+
+  .rate-button{
+
+    background-color: orange;
+    color: white;
+    padding: 8px;
+    border-radius: 10px;
+    border: none;
+    margin-top: 12px;
+    width: fit-content;
+    height: fit-content;
+    font-size: 12px;
+}  
+
+.post-box{
+    display: flex;
+    flex-direction: column;
 }

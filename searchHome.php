@@ -71,7 +71,7 @@ if (isset($_GET['searchBar'])) {
                         </a>
                     </li>
                     <li class="tab">
-                        <a href="#">
+                        <a href="tags.php">
                             <img src="images/tag.png" width="20px" height=auto>
                             <div>Tags</div>
                         </a>
@@ -80,8 +80,7 @@ if (isset($_GET['searchBar'])) {
             </div>
 
             <div class="middle-body-container">
-
-                <h1>Search Results</h1> <!--header of the set-->
+                <h1>Questions</h1> <!--header of the set-->
                 <!--the question tag-->
                 <div class="question-container" id="recent-questions-container"
                     style="overflow:visible; max-height: 700px;">
@@ -144,6 +143,7 @@ if (isset($_GET['searchBar'])) {
             </div>
         </div>
         <script src='scripts/cards.js'></script>
+        <script src = "scripts/deleteEditQA.js"></script> 
 </body>
 
 </html>
