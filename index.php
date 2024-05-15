@@ -117,9 +117,12 @@ include("database.php");
             </div>
             <div class="right-body-container">
                 <div class="dashboard-container">
-                    <div> Nb of questions asked:</div>
-                    <div> Nb of comments commented:</div>
-                    <div> Nb of Answers answered:</div>
+                    <div class="numOfQuestions">Number Of Questions: <div class="noq">1</div>
+                    </div>
+                    <div class="numOfComments">Number Of Comments: <div class="noc">11</div>
+                    </div>
+                    <div class="numOfAnswers">Number Of Answers: <div class="noa">121</div>
+                    </div>
                 </div>
             </div>
         </div>
