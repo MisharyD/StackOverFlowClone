@@ -11,7 +11,6 @@ function addQuestions(containerId,nbOfQuestions)
         }
 }
 
-
 //change the tag,answers,time, and question ids
 function changeQuestionAtt(questionNb,card)
 {

@@ -114,8 +114,6 @@ function addAnswerCards(pageContainer, pageId,nbOfCards)
         }
 }
 
-
-
 //change the tag,answers,time, and question ids
 function changeQuestionCardAtt(questionNb,card)
 {

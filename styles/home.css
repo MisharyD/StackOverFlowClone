@@ -24,6 +24,15 @@ body {
 
 }
 
+.delete-message {
+    background-color: #297d29;
+    color: white;
+    padding: 7px;
+    font-weight: bold;
+    width: fit-content;
+    border-radius: 7px;
+}
+
 .left-body-container, .right-body-container, .middle-body-container
 {
     padding:8px;
@@ -88,10 +97,16 @@ body {
     border: none;
     border-radius: 3px;
     font-size:15px;
+    text-align: center;
+    text-decoration: none;
 }
 .ask-question:hover
 {
     cursor: pointer;
+}
+.ask-question:visited
+{
+    color: white;
 }
 
 .tab-container
@@ -99,5 +114,44 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+.dashboard-container {
+    display: grid;
+    grid-template-rows: 150px 150px 150px;
+    background-color: #f7f6f6;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 1px 7px 16px 13px rgba(0, 0, 0, 0.1);
+    padding:16px;
+}
+
+.numOfQuestions,
+.numOfComments,
+.numOfAnswers {
+    display: flex;
+    flex-direction: column;
+    gap: 30%;
+    justify-content: center;
+    align-items: center;
+    color: #494949
+}
+
+.noq,
+.noa,
+.noc {
+    background-color: orange;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #898989;
+    font-size: 20px;
+}
+
+
 
 

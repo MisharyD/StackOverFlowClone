@@ -18,11 +18,29 @@ if ($conn->connect_error) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Stack Overflow</title>
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/home.css">
     <link rel="stylesheet" href="styles/cards.css">
     <link rel="stylesheet" href="styles/userHome.css">
+    <style>
+        .confMsg {
+            background-color: #297d29;
+            color: white;
+            padding: 7px;
+            font-weight: bold;
+            width: fit-content;
+            border-radius: 7px;
+            <?php
+            if (isset($_SESSION['editAnswerStatus']) || isset($_SESSION['editQuestionStatus'])) {
+                echo 'display:block';
+            } else {
+                echo 'display:none';
+            }
+
+            ?>
+        }
+        </style>
 </head>
 
 <body>
@@ -33,27 +51,27 @@ if ($conn->connect_error) {
     <div class="body">
         <div class="container">
             <div class="left-body-container">
-                <ul class="tab-container">
-                    <li class="tab">
+            <ul class="tab-container">
+                    <li class="current-page tab">
                         <a href="index.php">
                             <img src="images/homeIcon.png" width="20px" height=auto>
                             <div>Home</div>
                         </a>
                     </li>
-                    <li class="current-page tab">
+                    <li class="tab">
                         <a href="userHome.php">
                             <img src="images/user.png" width="20px" height=auto>
                             <div>Profile</div>
                         </a>
                     </li>
                     <li class="tab">
-                        <a href="#">
+                        <a href="searchHome.php">
                             <img src="images/question.png" width="15px" height=auto>
                             <div> Questions</div>
                         </a>
                     </li>
                     <li class="tab">
-                        <a href="#">
+                        <a href="tags.php">
                             <img src="images/tag.png" width="20px" height=auto>
                             <div>Tags</div>
                         </a>
@@ -61,15 +79,27 @@ if ($conn->connect_error) {
                 </ul>
             </div>
             <div class="middle-body-container">
+            <p class="confMsg">
+
+                <?php
+
+                if (isset($_SESSION['editQuestionStatus'])) {
+                    echo $_SESSION['editQuestionStatus'];
+                    unset($_SESSION['editQuestionStatus']);
+                } 
+                elseif ($_SESSION['editAnswerStatus']){
+                    echo $_SESSION['editAnswerStatus'];
+                    unset($_SESSION['editAnswerStatus']);
+                }
+
+                ?>
+
+                </p>
                 <div id="delete-question-message" class="delete-message" style="display:none"> Question was deleted succefully! </div>
                 <div id="delete-answer-message" class="delete-message" style="display:none"> Answer was deleted succefully! </div>
                 <div class="user-info">
                     <img src="images/user.png" alt="User Image">
-                    <span>Username</span>
-                </div>
-                <div class="bio">
-                    <h3>bio</h3>
-                    <p>This is where the user's bio information will be displayed.</p>
+                    <span id = "username">Username</span>
                 </div>
                 <div class="toggle-switch">
                     <button type="button" class="QA-button" id="question-type">Questions</button>
@@ -84,7 +114,7 @@ if ($conn->connect_error) {
                                 <p> answers </p>
                             </div>
                             <div class="question-content-tag">
-                                <div><a id="question" href="#">Question here </a></div>
+                                <div><a id="question" class = "qat" href="#">Question here </a></div>
                                 <p id="qTag"></p> <!--tags (each tag will have a span)-->
                             </div>
                         </div>
@@ -107,14 +137,14 @@ if ($conn->connect_error) {
                                 <p> AVG Rating </p>
                             </div>
                             <div class="question-content-tag">
-                                <div class="text"><a id="answer" href="#">Answer here </a></div>
+                                <div class="text"><a id="answer" href="#" >Answer here </a></div>
                                 <p id="qTag"></p>
                             </div>
                         </div>
                         <div class="right-container">
                             <div>
                                 <button class="delete-edit-buttons delete">Delete</button>
-                                <button class="delete-edit-buttons edit">Edit</button>
+                                <button class="delete-edit-buttons editAnswer">Edit</button>
                             </div>
                             <div class="time" id="aTime">
                                 answered 3 months ago by Abcd
@@ -132,24 +162,8 @@ if ($conn->connect_error) {
         </div>
     </div>
     <script src="scripts/pages.js"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll(".delete").forEach((button) => button.addEventListener("click", function(e) {
-                var confirmation = confirm("Are you sure you want to delete?");
-
-                if (confirmation) {
-                    //this method was used to avoid searching using IDs
-                    let card = e.target.parentNode.parentNode.parentNode
-                    //determines if the card is a question card or an answer card
-                    let type = card.classList.contains("questionCard");
-                    let deletePram = card.querySelector("a").innerHTML;
-                    url = 'userHome.php?type=' + encodeURIComponent(type) + "&deletePram=" + encodeURIComponent(deletePram);
-                    window.location.href = url;
-                }
-            }));
-        })
-    </script>
+    <script src = "scripts/deleteEditQA.js"></script>
+    <script src = "scripts/questionLink.js"></script>
 </body>
 
 </html>
@@ -243,22 +257,26 @@ if ($conn->connect_error) {
     //$_GET["title"] may be a title for a question or a description of an answer
     if (isset($_GET["type"]) && isset($_GET["deletePram"])) {
         if ($_GET["type"] == "true") {
-            //mysqli_query($conn,"DELETE FROM question WHERE title = '{$_GET['deletePram']}' ");
-            echo "<script>window.location.href ='userHome.php?deleted=' + encodeURIComponent('question') </script>";
+            mysqli_query($conn,"DELETE FROM question WHERE title = '{$_GET['deletePram']}' ");
+            echo "<script>window.location.href ='index.php?deleted=' + encodeURIComponent('question') </script>";
         } else {
-            echo "answer";
-            //mysqli_query($conn,"DELETE FROM answer WHERE description = '{$_GET['deletePram']}' ");
-            echo "<script>window.location.href ='userHome.php?deleted=' + encodeURIComponent('answer') </script>";
+            mysqli_query($conn,"DELETE FROM answer WHERE description = '{$_GET['deletePram']}' ");
+            echo "<script>window.location.href ='index.php?deleted=' + encodeURIComponent('answer') </script>";
         }
     }
-    ?>
+?>
 
     <!-- show deleted message -->
     <?php
-    if (isset($_GET["deleted"])) {
-        if ($_GET["deleted"] == "question")
-            echo "<script>document.querySelector('#delete-question-message ').style.display = 'block' </script>";
-        else if ($_GET["deleted"] == "answer")
-            echo "<script>document.querySelector('#delete-answer-message').style.display = 'block' </script>";
-    }
+        if (isset($_GET["deleted"])) {
+            if ($_GET["deleted"] == "question")
+                echo "<script>document.querySelector('#delete-question-message ').style.display = 'block' </script>";
+            else if ($_GET["deleted"] == "answer")
+                echo "<script>document.querySelector('#delete-answer-message').style.display = 'block' </script>";
+        }
+    ?>
+
+<!-- add user info -->
+<?php 
+    echo "<script> document.addEventListener('DOMContentLoaded', () => document.querySelector('#username').innerHTML = '{$_SESSION['username']}') </script>";
 ?>

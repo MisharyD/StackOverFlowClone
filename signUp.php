@@ -8,9 +8,9 @@ $error_message = "";
 // Check if the form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
-    $username = $_POST["username"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    $username = mysqli_real_escape_string($conn, $_POST["username"]);
+    $email = mysqli_real_escape_string($conn, $_POST["email"]);
+    $password = mysqli_real_escape_string($conn, $_POST["password"]);
     $rememberMe = isset($_POST["rememberMe"]) ? 1 : 0;
 
     // Check if the username or email already exists in the database
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div id="errorMSG"></div>
 
-            <div class="logo1"><a href="https://stackoverflow.com">
+            <div class="logo1"><a href="index.php">
                     <img src="images/stack.png" alt="logo"></a></div>
 
 
@@ -118,9 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="haveACC"> Already Have An Account? &nbsp&nbsp <a style="text-decoration:none; color:#146aff "
-                    href="">Login</a> </div>
-
-
+                    href="signIn.php">Login</a> </div>
         </div>
 
     </div>
