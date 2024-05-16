@@ -55,6 +55,19 @@
     box-shadow: 0 0 10px rgba(0,0,0,0.1)   
 }
 
+.answerCard a
+{
+    color:black;
+    text-decoration: none;
+}
+
+.answerCard a:hover
+{
+    color:black;
+    text-decoration: none;
+}
+
+
 .answer-container {
     background-color: #fdf7e2;
     border-radius: 8px;

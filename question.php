@@ -71,6 +71,8 @@ if (isset($_POST['question_comment'])) {
                                     VALUES ('$question_id', '$username', '$questionComment', '$createdAt')";
         mysqli_query($conn, $insertQuestionCommentQuery);
         // Redirect to question.php after inserting
+
+        $_SESSION['createCommentStatus'] = "Comment added auccessfully";
         header("Location: question.php?qat=$questionTitle");
         exit();
     }
@@ -95,6 +97,8 @@ if (isset($_POST['answer_comment'])) {
                                     VALUES ('$answerId', '$username', '$answerComment', '$createdAt')";
         mysqli_query($conn, $insertAnswerCommentQuery);
         // Redirect to question.php after inserting
+        $_SESSION['createCommentStatus'] = "Comment added successfully";
+
         header("Location: question.php?qat=$questionTitle");
         exit();
     }
@@ -112,15 +116,25 @@ if (isset($_POST['answer'])) {
         $username = $_SESSION['username'];
         $createdAt = date('Y-m-d H:i:s');
 
-        // Insert the answer into the database
-        $insertAnswerQuery = "INSERT INTO answer (question_id, userName, description, created_at)
-                                VALUES ('$question_id','$username' , '$answerDescription', '$createdAt')";
-        mysqli_query($conn, $insertAnswerQuery);
-        // Redirect to question.php after inserting
-        header("Location: question.php?qat=$questionTitle");
-        exit();
-    }
+        // Check if the user has already submitted an answer for this question
+        $checkAnswerQuery = "SELECT * FROM answer WHERE question_id = '$question_id' AND userName = '$username'";
+        $checkAnswerResult = mysqli_query($conn, $checkAnswerQuery);
 
+        if (mysqli_num_rows($checkAnswerResult) > 0) {
+            // User has already submitted an answer for this question, display an alert
+            echo "<script>alert('You have already submitted an answer for this question. This is your Answer: $answerDescription')</script>";
+        } else {
+            // Insert the answer into the database
+            $insertAnswerQuery = "INSERT INTO answer (question_id, userName, description, created_at)
+                                    VALUES ('$question_id','$username' , '$answerDescription', '$createdAt')";
+            mysqli_query($conn, $insertAnswerQuery);
+            // Redirect to question.php after inserting
+
+            $_SESSION['createAnswerStatus'] = "Answer added successfully";
+            header("Location: question.php?qat=$questionTitle");
+            exit();
+        }
+    }
 }
 
 // Handle rating submission
@@ -164,10 +178,27 @@ if (isset($_GET['rating'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quesiton Page</title>
-    <link rel="stylesheet" href="styles/home.css"> 
+    <link rel="stylesheet" href="styles/home.css">
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/Qsty.css">
-    <link rel="stylesheet" href="CSS/cards.css">
+    <style>
+        .confMsg {
+            background-color: #297d29;
+            color: white;
+            padding: 7px;
+            font-weight: bold;
+            width: fit-content;
+            border-radius: 7px;
+            <?php
+            if (isset($_SESSION['createAnswerStatus']) || isset($_SESSION['createCommentStatus'])) {
+                echo 'display:block';
+            } else {
+                echo 'display:none';
+            }
+
+            ?>
+        }
+    </style>
 </head>
 
 <body>
@@ -185,7 +216,7 @@ if (isset($_GET['rating'])) {
     <div class="body">
         <div class="container">
             <div class="left-body-container">
-            <ul class="tab-container">
+                <ul class="tab-container">
                     <li class="tab">
                         <a href="index.php">
                             <img src="images/homeIcon.png" width="20px" height=auto>
@@ -214,6 +245,21 @@ if (isset($_GET['rating'])) {
             </div>
 
             <div class="middle-body-container">
+            <p class="confMsg">
+
+                <?php
+
+                if (isset($_SESSION["createCommentStatus"])) {
+                    echo $_SESSION['createCommentStatus'];
+                    unset($_SESSION['createCommentStatus']);
+                } elseif (isset($_SESSION["createAnswerStatus"])){
+                    echo $_SESSION['createAnswerStatus'];
+                    unset($_SESSION['createAnswerStatus']);
+                }
+
+                ?>
+
+                </p>
 
                 <div class="question-container">
                     <div class="question-header">
@@ -245,13 +291,13 @@ if (isset($_GET['rating'])) {
                         <!-- Add quesiton comment section -->
                         <form action="question.php" method="POST">
                             <div class="addCommentForQuestion">
-                            <div class="post-box">
-                            <input type="button" class="btn-comment" value="Add a comment">
-                                <input required class="text-comment formField" type=" text "
-                                placeholder="Enter your comment here..." name="question_comment">
-                                <input type="hidden" name="qat" value="<?php echo $questionTitle ?>">
-                                <input type="submit" value="Submit Comment" class="submissionButton">
-                            </div>
+                                <div class="post-box">
+                                    <input type="button" class="btn-comment" value="Add a comment">
+                                    <input required class="text-comment formField" type=" text "
+                                        placeholder="Enter your comment here..." name="question_comment">
+                                    <input type="hidden" name="qat" value="<?php echo $questionTitle ?>">
+                                    <input type="submit" value="Submit Comment" class="submissionButton">
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -286,14 +332,15 @@ if (isset($_GET['rating'])) {
 
                                         <input type="radio" id="star5_<?php echo $answerId; ?>" name="rating"
                                             value="5"><label for="star5_<?php echo $answerId; ?>">&#9733</label>
-                                            <div>
-                                        <input type="submit" value="Submit Rate" class = "rate-button">
-                                        <input type="hidden" name="answer_id" value="<?php echo $answer['answer_id']; ?>">
-                                        <input type="hidden" name="qat" value="<?php echo $questionTitle ?>">
-                            </div>
+                                        <div>
+                                            <input type="submit" value="Submit Rate" class="rate-button">
+                                            <input type="hidden" name="answer_id"
+                                                value="<?php echo $answer['answer_id']; ?>">
+                                            <input type="hidden" name="qat" value="<?php echo $questionTitle ?>">
+                                        </div>
                                     </form>
-                           
-                            
+
+
                                     <h2>Comments</h2>
 
                                     <!-- Scenario 3: All comments for this answer -->
@@ -321,13 +368,13 @@ if (isset($_GET['rating'])) {
 
                                                 <input type="hidden" name="qat" value="<?php echo $questionTitle ?>">
                                                 <div class="post-box">
-                                                <input type="button" class="btn-comment" value="Add a comment">
-                                                <input required class="text-comment formField" type=" text "
-                                                    placeholder="Enter your comment here..." name="answer_comment">
+                                                    <input type="button" class="btn-comment" value="Add a comment">
+                                                    <input required class="text-comment formField" type=" text "
+                                                        placeholder="Enter your comment here..." name="answer_comment">
 
-                                                <input type="submit" value="Submit Comment" class="submissionButton">
+                                                    <input type="submit" value="Submit Comment" class="submissionButton">
+                                                </div>
                                             </div>
-                                        </div>
                                         </form>
                                     </div>
                                 </div>
@@ -351,41 +398,41 @@ if (isset($_GET['rating'])) {
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
                 <script>
-                    
+
 
                     // this function is to toggle the textarea when clicking on "Add a comment"
-                     $(document).ready(function() { 
-                        $(document).on('click', '.btn-comment', function() {
+                    $(document).ready(function () {
+                        $(document).on('click', '.btn-comment', function () {
                             $(this).siblings('.text-comment').toggle(); // Toggle the associated comment box
                             $(this).siblings('.submissionButton').toggle(); // Toggle the associated post comment button
-                            });
-                            });
+                        });
+                    });
 
 
 
-                  // Delegate click events for star rating on dynamic elements
-                    $(document).ready(function() {
-                        $('.container-allAnswersWithItsComments').on('click', 'label', function() {
+                    // Delegate click events for star rating on dynamic elements
+                    $(document).ready(function () {
+                        $('.container-allAnswersWithItsComments').on('click', 'label', function () {
                             let clickedIndex = $(this).index() / 2; // Adjusted because each label follows a radio input, doubling the number of children
                             // Store the clicked rating in the parent container
                             $(this).closest('.cont').data('rating', clickedIndex);
 
                             // Change color of the stars accordingly
-                            $(this).closest('.cont').find('label').css('color', function(index) {
+                            $(this).closest('.cont').find('label').css('color', function (index) {
                                 return index <= clickedIndex ? 'gold' : '#ccc';
                             });
                         });
 
-                        $('.container-allAnswersWithItsComments').on('mouseover', 'label', function() {
+                        $('.container-allAnswersWithItsComments').on('mouseover', 'label', function () {
                             let hoverIndex = $(this).index() / 2; // Same adjustment for the doubled index count
-                            $(this).closest('.cont').find('label').css('color', function(index) {
+                            $(this).closest('.cont').find('label').css('color', function (index) {
                                 return index <= hoverIndex ? 'gold' : '#ccc';
                             });
                         });
 
-                        $('.container-allAnswersWithItsComments').on('mouseout', '.cont', function() {
+                        $('.container-allAnswersWithItsComments').on('mouseout', '.cont', function () {
                             let storedRating = $(this).data('rating') || -1;  // Default to -1 if no rating has been set
-                            $(this).find('label').css('color', function(index) {
+                            $(this).find('label').css('color', function (index) {
                                 return index <= storedRating ? 'gold' : '#ccc';
                             });
                         });
@@ -503,7 +550,7 @@ if (isset($_GET['rating'])) {
                         });
                     });
 
-                </script>       
+                </script>
 </body>
 
 </html>

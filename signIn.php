@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
 
       <div class="dont-haveACC"> Don't Have An Account ?&nbsp&nbsp <a style="text-decoration:none; color:#146aff "
-          href="sign-up.php">Sign-Up</a> </div>
+          href="signUp.php">Sign-Up</a> </div>
 
 
     </div>

@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["username"]) && !isset($_COOKIE["remember_user"])) {
-    header("Location: login.php");
+    header("Location: signIn.php");
     exit();
 }
 
@@ -105,6 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="middle-body-container">
+                <h1>Ask a question</h1>
                 <div class="container">
                     <div class="right-side">
                         <form action="createQuestion.php" method="POST">

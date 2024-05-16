@@ -23,6 +23,24 @@ if ($conn->connect_error) {
     <link rel="stylesheet" href="styles/home.css">
     <link rel="stylesheet" href="styles/cards.css">
     <link rel="stylesheet" href="styles/userHome.css">
+    <style>
+        .confMsg {
+            background-color: #297d29;
+            color: white;
+            padding: 7px;
+            font-weight: bold;
+            width: fit-content;
+            border-radius: 7px;
+            <?php
+            if (isset($_SESSION['editAnswerStatus']) || isset($_SESSION['editQuestionStatus'])) {
+                echo 'display:block';
+            } else {
+                echo 'display:none';
+            }
+
+            ?>
+        }
+        </style>
 </head>
 
 <body>
@@ -61,6 +79,22 @@ if ($conn->connect_error) {
                 </ul>
             </div>
             <div class="middle-body-container">
+            <p class="confMsg">
+
+                <?php
+
+                if (isset($_SESSION['editQuestionStatus'])) {
+                    echo $_SESSION['editQuestionStatus'];
+                    unset($_SESSION['editQuestionStatus']);
+                } 
+                elseif ($_SESSION['editAnswerStatus']){
+                    echo $_SESSION['editAnswerStatus'];
+                    unset($_SESSION['editAnswerStatus']);
+                }
+
+                ?>
+
+                </p>
                 <div id="delete-question-message" class="delete-message" style="display:none"> Question was deleted succefully! </div>
                 <div id="delete-answer-message" class="delete-message" style="display:none"> Answer was deleted succefully! </div>
                 <div class="user-info">
@@ -80,7 +114,7 @@ if ($conn->connect_error) {
                                 <p> answers </p>
                             </div>
                             <div class="question-content-tag">
-                                <div><a id="question" href="#">Question here </a></div>
+                                <div><a id="question" class = "qat" href="#">Question here </a></div>
                                 <p id="qTag"></p> <!--tags (each tag will have a span)-->
                             </div>
                         </div>
@@ -103,7 +137,7 @@ if ($conn->connect_error) {
                                 <p> AVG Rating </p>
                             </div>
                             <div class="question-content-tag">
-                                <div class="text"><a id="answer" href="#">Answer here </a></div>
+                                <div class="text"><a id="answer" href="#" >Answer here </a></div>
                                 <p id="qTag"></p>
                             </div>
                         </div>

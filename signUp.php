@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div id="errorMSG"></div>
 
-            <div class="logo1"><a href="https://stackoverflow.com">
+            <div class="logo1"><a href="index.php">
                     <img src="images/stack.png" alt="logo"></a></div>
 
 
@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="haveACC"> Already Have An Account? &nbsp&nbsp <a style="text-decoration:none; color:#146aff "
-                    href="sighIn.php">Login</a> </div>
+                    href="signIn.php">Login</a> </div>
         </div>
 
     </div>
