@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = mysqli_query($conn, $checkSql);
     if (mysqli_num_rows($result) > 0) {
         // Question with the same title already exists, redirect to question.php with the existing question's title
-        echo "<script>alert('Hi There is a question same as yours, let's go there')</script>";
+        $_SESSION['thereIs'] = "Hi $username, this question same as yours";
         header("Location: question.php?qat=$questionTitle");
         exit();
     } else {

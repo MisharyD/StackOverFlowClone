@@ -97,7 +97,7 @@ if (isset($_POST['answer_comment'])) {
                                     VALUES ('$answerId', '$username', '$answerComment', '$createdAt')";
         mysqli_query($conn, $insertAnswerCommentQuery);
         // Redirect to question.php after inserting
-        $_SESSION['createCommentStatus'] = "Comment added successfully";
+        $_SESSION['createCommentStatus'] = "Comment added auccessfully";
 
         header("Location: question.php?qat=$questionTitle");
         exit();
@@ -130,7 +130,7 @@ if (isset($_POST['answer'])) {
             mysqli_query($conn, $insertAnswerQuery);
             // Redirect to question.php after inserting
 
-            $_SESSION['createAnswerStatus'] = "Answer added successfully";
+            $_SESSION['createAnswerStatus'] = "Answer added auccessfully";
             header("Location: question.php?qat=$questionTitle");
             exit();
         }
@@ -181,6 +181,7 @@ if (isset($_GET['rating'])) {
     <link rel="stylesheet" href="styles/home.css">
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/Qsty.css">
+    <!-- <link rel="stylesheet" href="CSS/cards.css"> -->
     <style>
         .confMsg {
             background-color: #297d29;
@@ -190,7 +191,7 @@ if (isset($_GET['rating'])) {
             width: fit-content;
             border-radius: 7px;
             <?php
-            if (isset($_SESSION['createAnswerStatus']) || isset($_SESSION['createCommentStatus'])) {
+            if (isset($_SESSION['createAnswerStatus']) || isset($_SESSION['createCommentStatus']) || isset($_SESSION['thereIs'])) {
                 echo 'display:block';
             } else {
                 echo 'display:none';
@@ -255,7 +256,12 @@ if (isset($_GET['rating'])) {
                 } elseif (isset($_SESSION["createAnswerStatus"])){
                     echo $_SESSION['createAnswerStatus'];
                     unset($_SESSION['createAnswerStatus']);
+                } elseif (isset($_SESSION['thereIs'])){
+                    echo $_SESSION['thereIs'];
+                    unset($_SESSION['thereIs']);
                 }
+
+                
 
                 ?>
 
